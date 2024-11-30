@@ -1,0 +1,69 @@
+Job started at Thu Nov 28 17:51:41 CST 2024
+Running on host c315-004.ls6.tacc.utexas.edu
+/home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest
+Thu Nov 28 17:51:41 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-PCIE-40GB          On  | 00000000:21:00.0 Off |                    0 |
+| N/A   25C    P0              31W / 250W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-PCIE-40GB          On  | 00000000:81:00.0 Off |                    0 |
+| N/A   22C    P0              32W / 250W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   2  NVIDIA A100-PCIE-40GB          On  | 00000000:E2:00.0 Off |                    0 |
+| N/A   23C    P0              35W / 250W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Python version:
+Python 3.12.7
+Conda environment:
+
+     active environment : base
+    active env location : /home1/09999/aymanmahfuz/miniconda3
+            shell level : 1
+       user config file : /home1/09999/aymanmahfuz/.condarc
+ populated config files : /home1/09999/aymanmahfuz/miniconda3/.condarc
+          conda version : 24.9.2
+    conda-build version : not installed
+         python version : 3.12.7.final.0
+                 solver : libmamba (default)
+       virtual packages : __archspec=1=zen3
+                          __conda=24.9.2=0
+                          __cuda=12.2=0
+                          __glibc=2.28=0
+                          __linux=4.18.0=0
+                          __unix=0=0
+       base environment : /home1/09999/aymanmahfuz/miniconda3  (writable)
+      conda av data dir : /home1/09999/aymanmahfuz/miniconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home1/09999/aymanmahfuz/miniconda3/pkgs
+                          /home1/09999/aymanmahfuz/.conda/pkgs
+       envs directories : /home1/09999/aymanmahfuz/miniconda3/envs
+                          /home1/09999/aymanmahfuz/.conda/envs
+               platform : linux-64
+             user-agent : conda/24.9.2 requests/2.32.3 CPython/3.12.7 Linux/4.18.0-372.26.1.el8_6.x86_64 rocky/8.10 glibc/2.28 solver/libmamba conda-libmamba-solver/24.9.0 libmambapy/1.5.8 aau/0.4.4 c/. s/. e/.
+                UID:GID : 893489:826266
+             netrc file : None
+           offline mode : False
+
+
+Job finished at Thu Nov 28 17:51:43 CST 2024
