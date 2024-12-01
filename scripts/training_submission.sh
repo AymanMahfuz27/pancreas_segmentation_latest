@@ -7,7 +7,7 @@
 #SBATCH -n 1
 #SBATCH -t 48:00:00
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=your_email@utexas.edu
+#SBATCH --mail-user=aymanmahfuz27@utexas.edu
 
 # Set working directory
 SCRATCH_DIR=/scratch/09999/aymanmahfuz
