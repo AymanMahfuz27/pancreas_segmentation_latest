@@ -1,3 +1,5 @@
+#test_gcp_job.sh
+#description: Test GPU access and PyTorch installation.
 #!/bin/bash
 #SBATCH -J TestGPU           # Job name
 #SBATCH -o TestGPU.o%j       # Name of stdout output file (%j expands to jobId)

@@ -1,3 +1,5 @@
+#setup_medsam2.sh
+#description: Setup the MedSAM2 environment.
 #!/bin/bash
 #SBATCH -J medsam2_setup    # Job name
 #SBATCH -o medsam2.o%j      # Name of stdout output file

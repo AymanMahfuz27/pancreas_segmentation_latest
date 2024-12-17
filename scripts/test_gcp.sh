@@ -1,3 +1,5 @@
+#test_gcp.sh
+#description: Test GCP access and download data.
 #!/bin/bash
 #SBATCH -J gcp_test
 #SBATCH -o gcp_test.o%j

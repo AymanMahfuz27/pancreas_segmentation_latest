@@ -1,3 +1,5 @@
+#get_checkpoint.sh
+#description: Setup the SAM2 checkpoint for training.
 #!/bin/bash
 #SBATCH -J setup_checkpoint
 #SBATCH -o setup_checkpoint.o%j

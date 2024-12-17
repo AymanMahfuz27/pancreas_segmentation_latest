@@ -1,3 +1,5 @@
+#training_submission.sh
+#description: Submit a training job for pancreas segmentation.
 #!/bin/bash
 #SBATCH -J pancreas_train
 #SBATCH -o pancreas_train.o%j

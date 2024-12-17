@@ -1,3 +1,5 @@
+#download_setup.sh
+#description: Download the SAM2 checkpoint from Hugging Face.
 #!/bin/bash
 #SBATCH -J medsam2_download
 #SBATCH -o medsam2_download.o%j

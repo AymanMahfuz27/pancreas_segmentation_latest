@@ -1,0 +1,42 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%environment
+    export LC_ALL=C
+    export PATH=/opt/conda/bin:$PATH
+    export PYTHONPATH=/workspace
+
+%files
+    environment.yml /opt/environment.yml
+
+%post
+    # Install system packages
+    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        wget \
+        git \
+        build-essential \
+        python3-pip \
+        python3-dev \
+        && rm -rf /var/lib/apt/lists/*
+
+    # Install Miniconda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py312_24.1.2-0-Linux-x86_64.sh -O /miniconda.sh
+    bash /miniconda.sh -b -p /opt/conda
+    rm /miniconda.sh
+
+    # Initialize conda
+    . /opt/conda/etc/profile.d/conda.sh
+
+    # Install specific conda version
+    /opt/conda/bin/conda install -y conda=23.7.4
+
+    # Create conda environment
+    /opt/conda/bin/conda env create -f /opt/environment.yml
+    
+    # Clean up
+    /opt/conda/bin/conda clean -afy
+
+%runscript
+    eval "$(conda shell.bash hook)"
+    conda activate medsam2
+    exec "$@"
