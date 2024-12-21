@@ -1,9 +1,0 @@
-Configuration:
-Project Directory: /home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest
-Work Directory: /work/09999/aymanmahfuz/ls6
-Test Data Directory: /scratch/09999/aymanmahfuz/pancreas_test_data
-Checkpoint Path: /work/09999/aymanmahfuz/ls6/checkpoints/sam2_hiera_small.pt
-Python Path: /home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest:/home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest/sam2_train:
-Config File: sam2_hiera_s
-Starting single-epoch test training...
-Test training completed successfully

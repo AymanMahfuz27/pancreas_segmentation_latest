@@ -1,0 +1,22 @@
+INFO:    Starting build...
+Getting image source signatures
+Copying blob sha256:1778125de6cf63ccae76d115e0f513fe70dcc1d00bb651bbe70e3a43f504767e
+Copying blob sha256:effa00008be369d80aeef98471082d6cde2059cdea5dc760d669d0a7ded74b8e
+Copying blob sha256:5ef329c1408744c7372329dd10b58111284e005e1ee4e38650717f237993900a
+Copying blob sha256:6414378b647780fee8fd903ddb9541d134a1947ce092d08bdeb23a54cb3684ac
+Copying blob sha256:6869c412f1e40cc89e94f957914da8ea9a380b773ac359075d76d79960bf5ed3
+Copying blob sha256:1796a89e38f141b28b23787d442356645f487ad2711fdd43ad8f5d7aecacd688
+Copying blob sha256:6308e6945bf14956d2061894952f97ee24ad34a8fcc016a6f489578a9e43c458
+Copying config sha256:14547db4ac544f92677067925e11cca87e24a1a9253661121ae2b7759af19d31
+Writing manifest to image destination
+Storing signatures
+2024/12/17 10:39:34  info unpack layer: sha256:6414378b647780fee8fd903ddb9541d134a1947ce092d08bdeb23a54cb3684ac
+2024/12/17 10:39:34  info unpack layer: sha256:effa00008be369d80aeef98471082d6cde2059cdea5dc760d669d0a7ded74b8e
+2024/12/17 10:39:37  warn rootless{usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper} ignoring (usually) harmless EPERM on setxattr "security.capability"
+2024/12/17 10:39:38  info unpack layer: sha256:6869c412f1e40cc89e94f957914da8ea9a380b773ac359075d76d79960bf5ed3
+2024/12/17 10:40:37  info unpack layer: sha256:5ef329c1408744c7372329dd10b58111284e005e1ee4e38650717f237993900a
+2024/12/17 10:40:43  info unpack layer: sha256:1796a89e38f141b28b23787d442356645f487ad2711fdd43ad8f5d7aecacd688
+2024/12/17 10:40:43  info unpack layer: sha256:1778125de6cf63ccae76d115e0f513fe70dcc1d00bb651bbe70e3a43f504767e
+2024/12/17 10:42:01  info unpack layer: sha256:6308e6945bf14956d2061894952f97ee24ad34a8fcc016a6f489578a9e43c458
+INFO:    Creating SIF file...
+INFO:    Build complete: /work/09999/aymanmahfuz/ls6/containers/medsam2.sif

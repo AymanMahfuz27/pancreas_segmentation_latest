@@ -1,5 +1,4 @@
 import fileinput
-import sys
 
 filename = 'train_3d.py'
 search_text = 'loss = function.train_sam(args, net, optimizer, nice_train_loader, epoch)'

@@ -37,7 +37,7 @@ def download_case(client, bucket_name, case_name, dest_dir):
         logger.error(f"Error downloading case {case_name}: {e}")
         return False
 
-def main(dest_dir, num_cases=100):
+def main(dest_dir, num_cases=None):
     client = storage.Client()
     bucket_name = 'pancreas-training-data-dcm'
     bucket = client.bucket(bucket_name)
@@ -50,7 +50,7 @@ def main(dest_dir, num_cases=100):
             case_name = Path(blob.name).parent.name
             cases.add(case_name)
     
-    cases = sorted(list(cases))[:num_cases]
+    # cases = sorted(list(cases))[:num_cases]
     logger.info(f"Found {len(cases)} cases to download")
     
     # Download cases in parallel

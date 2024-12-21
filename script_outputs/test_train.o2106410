@@ -1,0 +1,35 @@
+Configuration:
+Project Directory: /home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest
+Work Directory: /work/09999/aymanmahfuz/ls6
+Test Data Directory: /scratch/09999/aymanmahfuz/pancreas_test_data
+Container Path: /work/09999/aymanmahfuz/ls6/containers/medsam2.sif
+Starting single-epoch test training...
+time_for_training  29.01505732536316
+time_for_training  16.003723859786987
+time_for_training  15.841521263122559
+time_for_training  16.06416130065918
+time_for_training  15.824227809906006
+time_for_training  16.10244131088257
+time_for_training  16.073647260665894
+time_for_training  16.176254272460938
+time_for_training  16.06820821762085
+time_for_training  16.329617977142334
+time_for_training  16.140141248703003
+time_for_training  15.965392589569092
+time_for_training  16.20870804786682
+time_for_training  16.054383039474487
+time_for_training  16.06711483001709
+time_for_training  16.638393878936768
+time_for_training  16.0642831325531
+time_for_training  15.97044038772583
+time_for_training  15.95913815498352
+time_for_training  16.020338535308838
+time_for_training  15.99958062171936
+time_for_training  16.02309250831604
+time_for_training  15.899827480316162
+time_for_training  16.216835498809814
+time_for_training  16.146725177764893
+time_for_training  16.032947301864624
+time_for_training  16.0587100982666
+time_for_training  16.053670167922974
+Test training completed successfully

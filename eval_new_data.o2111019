@@ -1,0 +1,18 @@
+Case Virostko_252908.07.01.09-53-30.WIP_T2W_SPAIR_bh.01: Dice=0.2356, IoU=0.1860
+Case Virostko_251251.05.01.07-39-02.WIP_T2W_SPAIR_bh.01: Dice=0.1596, IoU=0.1181
+Case Virostko_252990.05.01.08-31-57.WIP_T2W_SPAIR_bh.01: Dice=0.1725, IoU=0.1364
+Case Virostko_253297.07.01.11-41-09.WIP_T2W_SPAIR_bh.01: Dice=0.0458, IoU=0.0303
+Case Virostko_251346.07.01.08-33-44.WIP_T2W_SPAIR_bh.01: Dice=0.5777, IoU=0.4421
+Case Virostko_252456.05.01.07-22-52.WIP_T2W_SPAIR_bh.01: Dice=0.1009, IoU=0.0671
+Case Virostko_253059.05.01.08-27-01.WIP_T2W_SPAIR_bh.01: Dice=0.1390, IoU=0.1114
+Case Virostko_253085.05.01.11-45-07.WIP_T2W_SPAIR_bh.01: Dice=0.1712, IoU=0.1348
+Case Virostko_253420.05.01.09-37-02.WIP_T2W_SPAIR_bh.01: Dice=0.1245, IoU=0.1044
+Case Virostko_251369.05.01.07-24-53.WIP_T2W_SPAIR_bh.01: Dice=0.1865, IoU=0.1528
+Case Virostko_254430.05.01.10-23-11.WIP_T2W_SPAIR_bh.01: Dice=0.1667, IoU=0.1296
+Case Virostko_253557.05.01.10-04-34.WIP_T2W_SPAIR_bh.01: Dice=0.1342, IoU=0.1044
+
+=== Evaluation Complete ===
+Average Dice: 0.1845
+Average IoU:  0.1431
+Detailed results saved in evaluation_results.json
+Evaluation completed. Check /scratch/09999/aymanmahfuz/eval_results for results.

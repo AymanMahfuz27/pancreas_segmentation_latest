@@ -2,10 +2,14 @@
 #SBATCH -J download_cases
 #SBATCH -o download_cases.o%j
 #SBATCH -e download_cases.e%j
-#SBATCH -p gpu-h100
+#SBATCH -p normal
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -t 02:00:00
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=aymanmahfuz27@utexas.edu
+
+export GOOGLE_APPLICATION_CREDENTIALS=~/gcp_credentials.json
 
 # Set directories
 SCRATCH_DIR=/scratch/09999/aymanmahfuz
@@ -22,6 +26,7 @@ conda activate medsam2
 # Create data directory
 DATA_DIR=$SCRATCH_DIR/pancreas_test_data
 mkdir -p $DATA_DIR
+
 
 # Create Python script for downloading cases
 cat << 'EOF' > download_cases.py
@@ -64,7 +69,7 @@ def download_case(client, bucket_name, case_name, dest_dir):
         logger.error(f"Error downloading case {case_name}: {e}")
         return False
 
-def main(dest_dir, num_cases=100):
+def main(dest_dir, num_cases=None):
     client = storage.Client()
     bucket_name = 'pancreas-training-data-dcm'
     bucket = client.bucket(bucket_name)
@@ -77,7 +82,7 @@ def main(dest_dir, num_cases=100):
             case_name = Path(blob.name).parent.name
             cases.add(case_name)
     
-    cases = sorted(list(cases))[:num_cases]
+    # cases = sorted(list(cases))[:num_cases]
     logger.info(f"Found {len(cases)} cases to download")
     
     # Download cases in parallel

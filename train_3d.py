@@ -78,7 +78,7 @@ def main():
     best_acc = 0.0
     best_tol = 1e4
     best_dice = 0.0
-    early_stopping_patience = 10
+    early_stopping_patience = 30
     best_validation_dice = 0
     patience_counter = 0
 
@@ -87,7 +87,7 @@ def main():
         time_start = time.time()
         
         # Update the function call to use the new single optimizer
-        loss = function.train_sam(args, net, optimizer, nice_train_loader, epoch)
+        loss = function.train_sam(args, net, optimizer, None, nice_train_loader, epoch)
         logger.info(f'Train loss: {loss} || @ epoch {epoch}.')
         
         # Apply gradient clipping (add this line)
