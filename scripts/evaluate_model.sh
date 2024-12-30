@@ -20,7 +20,7 @@ module load tacc-apptainer
 cd "$PROJECT_DIR"
 
 # Path to your best model
-BEST_MODEL_PATH="$PROJECT_DIR/logs/pancreas_full_training_2024_12_20_01_36_35/Model/best_model.pth"
+BEST_MODEL_PATH="$PROJECT_DIR/logs/pancreas_full_training_2024_12_25_18_03_32/Model/best_model.pth"
 
 # Evaluation data directory (contains subdirs each with mri.dcm, mask.dcm)
 EVAL_DATA_DIR="/scratch/pancreas_eval_data"
@@ -266,6 +266,7 @@ EOF
 # Now run inside the container
 #####################################
 apptainer exec --nv \
+  --bind /work/09999/aymanmahfuz/ls6/checkpoints:/work/checkpoints \
   --bind "$SCRATCH_DIR:/scratch" \
   --bind "$PROJECT_DIR:/project" \
   --bind "$WORK_DIR:/work" \

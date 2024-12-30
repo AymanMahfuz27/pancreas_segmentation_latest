@@ -45,11 +45,44 @@ def get_dataloader(args):
         nice_test_loader = DataLoader(amos_test_dataset, batch_size=1, shuffle=False, num_workers=1, pin_memory=True)
         '''end'''
     elif args.dataset == 'pancreas':
-        pancreas_train_dataset = PancreasDataset(args, args.data_path, transform=None, transform_msk=None, mode='Training', prompt=args.prompt)
-        pancreas_test_dataset = PancreasDataset(args, args.data_path, transform=None, transform_msk=None, mode='Test', prompt=args.prompt)
+        # e.g. patch_size could be read from args or fixed
+        patch_z = 32
+        patch_y = 256
+        patch_x = 256
+        pancreas_train_dataset = PancreasDataset(
+            args,
+            args.data_path,
+            mode='Training',
+            prompt=args.prompt,
+            patch_size=(patch_z, patch_y, patch_x),
+            margin=10,
+            do_augmentation=True  # augment only on train
+        )
+        pancreas_test_dataset = PancreasDataset(
+            args,
+            args.data_path,
+            mode='Validation',
+            prompt=args.prompt,
+            patch_size=(patch_z, patch_y, patch_x),
+            margin=10,
+            do_augmentation=False # no augmentation on val
+        )
 
-        nice_train_loader = DataLoader(pancreas_train_dataset, batch_size=args.b, shuffle=True, num_workers=4, pin_memory=True)
-        nice_test_loader = DataLoader(pancreas_test_dataset, batch_size=1, shuffle=False, num_workers=1, pin_memory=True)
+        nice_train_loader = DataLoader(
+            pancreas_train_dataset,
+            batch_size=args.b,
+            shuffle=True,
+            num_workers=4,
+            pin_memory=True
+        )
+        nice_test_loader = DataLoader(
+            pancreas_test_dataset,
+            batch_size=1,
+            shuffle=False,
+            num_workers=1,
+            pin_memory=True
+        )
+
 
 
     else:

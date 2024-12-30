@@ -13,6 +13,7 @@ model:
       stages: [1, 2, 11, 2]
       global_att_blocks: [7, 10, 13]
       window_pos_embed_bkg_spatial_size: [7, 7]
+      use_grad_ckpt: true    # <--- ADDED
     neck:
       _target_: sam2_train.modeling.backbones.image_encoder.FpnNeck
       position_encoding:
@@ -85,7 +86,7 @@ model:
         num_layers: 2
 
   num_maskmem: 7
-  image_size: 1024
+  image_size: 512
   # apply scaled sigmoid on mask logits for memory encoder, and directly feed input mask as output mask
   sigmoid_scale_for_mem_enc: 20.0
   sigmoid_bias_for_mem_enc: -10.0

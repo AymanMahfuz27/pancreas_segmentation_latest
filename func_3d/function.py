@@ -1,7 +1,9 @@
 """ function for training and validation in one epoch
     Yunli Qi
 """
-
+##############################################################################
+# function.py
+##############################################################################
 import os
 import matplotlib.pyplot as plt
 import torch
@@ -10,13 +12,11 @@ import torch.nn.functional as F
 from einops import rearrange
 from monai.losses import DiceLoss, FocalLoss
 from tqdm import tqdm
+import sys
 
 import cfg
 from conf import settings
 from func_3d.utils import eval_seg
-
-# Remove global args usage and GPUdevice setup here
-# Remove global pos_weight, criterion_G, and paper_loss here
 
 class CombinedLoss(nn.Module):
     def __init__(self, dice_weight=1, focal_weight=1):
@@ -31,7 +31,6 @@ class CombinedLoss(nn.Module):
         focal = self.focal_loss(inputs, targets)
         return self.dice_weight * dice + self.focal_weight * focal
 
-# Avoid defining GPU or losses globally
 torch.backends.cudnn.benchmark = True
 scaler = torch.cuda.amp.GradScaler()
 max_iterations = settings.EPOCH
@@ -41,11 +40,13 @@ epoch_loss_values = []
 metric_values = []
 
 def train_sam(args, net: nn.Module, optimizer1, optimizer2, train_loader, epoch):
-    # Define GPUdevice and loss inside function
+    """
+    During training, we skip empty slices (i.e., slices with no pancreas),
+    and only prompt a subset of the non-empty slices to avoid confusion.
+    """
     GPUdevice = torch.device('cuda:' + str(args.gpu_device))
     pos_weight = torch.ones([1]).cuda(device=GPUdevice)*2
     criterion_G = torch.nn.BCEWithLogitsLoss(pos_weight=pos_weight)
-    # If needed, define paper_loss here if you actually use it
     paper_loss = CombinedLoss(dice_weight=1/21, focal_weight=20/21)
 
     net.train()
@@ -54,93 +55,146 @@ def train_sam(args, net: nn.Module, optimizer1, optimizer2, train_loader, epoch)
     if optimizer2 is not None:
         optimizer2.zero_grad()
 
-    video_length = args.video_length
-    prompt = args.prompt
-    prompt_freq = args.prompt_freq
+    video_length = args.video_length      # e.g. 30 or 48 slices
+    prompt = args.prompt                 # "bbox" or "click"
+    prompt_freq = args.prompt_freq       # how often we prompt => e.g. 2
+    # but we will skip empty slices, see below
     lossfunc = criterion_G
 
-    epoch_loss = 0
-    epoch_prompt_loss = 0
-    epoch_non_prompt_loss = 0
+    epoch_loss = 0.0
+    epoch_prompt_loss = 0.0
+    epoch_non_prompt_loss = 0.0
 
+    # Choose how many non-empty slices to actually prompt
+    # e.g. we can keep prompt_freq as is, or define a new param:
+    skip_factor = 2  # skip empty frames, then further skip to every 2nd or 3rd
+    
     with tqdm(total=len(train_loader), desc=f'Epoch {epoch}', unit='img') as pbar:
         for pack in train_loader:
             torch.cuda.empty_cache()
-            imgs_tensor = pack['image']
-            mask_dict = pack['label']
+            imgs_tensor = pack['image']      # shape [Z, 3, H, W]
+            if imgs_tensor.dim() == 5 and imgs_tensor.size(0) == 1:
+                imgs_tensor = imgs_tensor.squeeze(0)  # => [Z, 3, H, W]
+
+            mask_dict   = pack['label']      # dict: mask_dict[slice_z][obj_id] => [H,W]
+
+            # possibly also have pt_dict, p_label if prompt=="click"
+            # or bbox_dict if prompt=="bbox"
             if prompt == 'click':
-                pt_dict = pack['pt']
-                point_labels_dict = pack['p_label']
+                pt_dict       = pack.get('pt', None)
+                point_lbl_dict= pack.get('p_label', None)
             elif prompt == 'bbox':
-                bbox_dict = pack['bbox']
-            imgs_tensor = imgs_tensor.squeeze(0).to(dtype=torch.float32, device=GPUdevice)
-            
+                bbox_dict     = pack.get('bbox', None)
+
+            imgs_tensor = imgs_tensor.to(dtype=torch.float32, device=GPUdevice)
+
+            # 1) Build train_state
             train_state = net.train_init_state(imgs_tensor=imgs_tensor)
-            prompt_frame_id = list(range(0, video_length, prompt_freq))
-            obj_list = []
-            for id in prompt_frame_id:
-                obj_list += list(mask_dict[id].keys())
-            obj_list = list(set(obj_list))
-            if len(obj_list) == 0:
+
+            # 2) Identify the slices that actually have the object
+            #    (since in your dataset, mask_dict[z] = {0: slice_mask} if non-empty)
+            #    We'll gather them into a list, then sub-sample them
+            nonempty_slices = []
+            Z = imgs_tensor.size(0)
+            for z in range(Z):
+                # if there's something in mask_dict[z], let's see if slice_mask is >0
+                if z in mask_dict and len(mask_dict[z])>0:
+                    # e.g. mask_dict[z] = {0: <some mask>}
+                    slice_mask = mask_dict[z][0]  # [H,W] tensor
+                    if slice_mask.sum() > 0:
+                        nonempty_slices.append(z)
+            
+
+            # sub-sample them => e.g. pick every nth
+            # you could do: nonempty_slices = nonempty_slices[:: prompt_freq]
+            # but let's do skip_factor. Tweak as you like.
+            chosen_slices = nonempty_slices[::skip_factor]
+
+            if len(chosen_slices)==0:
+                # no pancreas? skip
                 continue
 
-            name = pack['image_meta_dict']['filename_or_obj']
+            # 3) We have only "obj_id=0" in your dataset. If you had multiple, collect them
+            obj_list = [0]  # or gather from mask_dict if you have multiple objects
 
+            # 4) Actually add prompts for only these chosen slices
             with torch.cuda.amp.autocast():
-                for id in prompt_frame_id:
+                for z_idx in chosen_slices:
                     for ann_obj_id in obj_list:
                         try:
-                            if prompt == 'click':
-                                points = pt_dict[id][ann_obj_id].to(device=GPUdevice)
-                                labels = point_labels_dict[id][ann_obj_id].to(device=GPUdevice)
-                                net.train_add_new_points(train_state, id, ann_obj_id, points, labels, False)
-                            elif prompt == 'bbox':
-                                bbox = bbox_dict[id][ann_obj_id].to(device=GPUdevice)
-                                net.train_add_new_bbox(train_state, id, ann_obj_id, bbox, False)
+                            if prompt=='bbox' and bbox_dict is not None:
+                                bbox = bbox_dict[z_idx][ann_obj_id].to(device=GPUdevice)
+                                net.train_add_new_bbox(train_state, z_idx, ann_obj_id, bbox, False)
+                            elif prompt=='click' and pt_dict is not None:
+                                # handle clicks
+                                pass
+                            else:
+                                # fallback
+                                net.train_add_new_mask(
+                                    train_state, z_idx, ann_obj_id,
+                                    torch.zeros(imgs_tensor.shape[2:]).to(GPUdevice)
+                                )
                         except KeyError:
-                            net.train_add_new_mask(train_state, id, ann_obj_id,
-                                                   torch.zeros(imgs_tensor.shape[2:]).to(device=GPUdevice))
+                            # if there's no bounding box for that slice
+                            net.train_add_new_mask(
+                                train_state, z_idx, ann_obj_id,
+                                torch.zeros(imgs_tensor.shape[2:]).to(GPUdevice)
+                            )
 
+                # 5) Forward pass => get predicted masks on all frames
                 video_segments = {}
-                for out_frame_idx, out_obj_ids, out_mask_logits in net.train_propagate_in_video(train_state, start_frame_idx=0):
+                for out_frame_idx, out_obj_ids, out_mask_logits in net.train_propagate_in_video(
+                    train_state, start_frame_idx=0):
                     video_segments[out_frame_idx] = {
-                        out_obj_id: out_mask_logits[i]
-                        for i, out_obj_id in enumerate(out_obj_ids)
+                        o_id: out_mask_logits[i] for i, o_id in enumerate(out_obj_ids)
                     }
 
-                loss = 0
-                non_prompt_loss = 0
-                prompt_loss = 0
-                for id in range(video_length):
+                # 6) Compute total loss across all slices
+                loss_val = 0.0
+                prompt_loss_val = 0.0
+                non_prompt_loss_val = 0.0
+
+                for z in range(Z):
                     for ann_obj_id in obj_list:
-                        pred = video_segments[id][ann_obj_id].unsqueeze(0)
-                        try:
-                            mask = mask_dict[id][ann_obj_id].to(dtype=torch.float32, device=GPUdevice)
-                        except KeyError:
-                            mask = torch.zeros_like(pred).to(device=GPUdevice)
-                        obj_loss = lossfunc(pred, mask)
-                        loss += obj_loss.item()
-                        if id in prompt_frame_id:
-                            prompt_loss += obj_loss
+                        pred = video_segments[z][ann_obj_id].unsqueeze(0)  # => [1,H,W]
+                        # get ground truth if available, else zero
+                        if z in mask_dict and ann_obj_id in mask_dict[z]:
+                            mask = mask_dict[z][ann_obj_id].to(dtype=torch.float32, device=GPUdevice)
                         else:
-                            non_prompt_loss += obj_loss
+                            mask = torch.zeros_like(pred)
 
-                loss = loss / video_length / len(obj_list)
-                if prompt_freq > 1:
-                    non_prompt_loss = non_prompt_loss / (video_length - len(prompt_frame_id)) / len(obj_list)
-                prompt_loss = prompt_loss / len(prompt_frame_id) / len(obj_list)
+                        obj_loss = lossfunc(pred, mask)
+                        loss_val += obj_loss.item()
 
-                pbar.set_postfix(**{'loss (batch)': loss})
-                epoch_loss += loss
-                epoch_prompt_loss += prompt_loss.item()
-                if prompt_freq > 1:
-                    epoch_non_prompt_loss += non_prompt_loss.item()
+                        if z in chosen_slices:
+                            prompt_loss_val += obj_loss
+                        else:
+                            non_prompt_loss_val += obj_loss
 
-                if (non_prompt_loss is not int) and (optimizer2 is not None) and prompt_freq > 1:
-                    non_prompt_loss.backward(retain_graph=True)
+                slice_count = video_length
+                obj_count = len(obj_list)
+                total_frames = slice_count * obj_count
+
+                loss_val /= total_frames
+                if len(chosen_slices) > 0:
+                    prompt_loss_val /= (len(chosen_slices) * obj_count)
+                if slice_count - len(chosen_slices) > 0:
+                    non_prompt_loss_val /= ((slice_count - len(chosen_slices)) * obj_count)
+
+                # accumulate epoch stats
+                epoch_loss        += loss_val
+                epoch_prompt_loss += prompt_loss_val.item()
+                epoch_non_prompt_loss += non_prompt_loss_val.item()
+
+                # 7) Backprop
+                # in your original code, you had 2 optimizers => optimizer1, optimizer2
+                # if you only have 1 => just call .backward() on the total
+                # We'll do your existing logic:
+                if (non_prompt_loss_val is not int) and optimizer2 is not None and len(chosen_slices)<slice_count:
+                    non_prompt_loss_val.backward(retain_graph=True)
                     optimizer2.step()
                 if optimizer1 is not None:
-                    prompt_loss.backward()
+                    prompt_loss_val.backward()
                     optimizer1.step()
                     optimizer1.zero_grad()
                 if optimizer2 is not None:
@@ -150,7 +204,13 @@ def train_sam(args, net: nn.Module, optimizer1, optimizer2, train_loader, epoch)
 
             pbar.update()
 
-    return epoch_loss / len(train_loader), epoch_prompt_loss / len(train_loader), epoch_non_prompt_loss / len(train_loader)
+    # Return averaged loss
+    num_batches = len(train_loader)
+    return (
+        epoch_loss / num_batches,
+        epoch_prompt_loss / num_batches,
+        epoch_non_prompt_loss / num_batches
+    )
 
 
 def validation_sam(args, val_loader, epoch, net: nn.Module, clean_dir=True):
@@ -247,191 +307,169 @@ def validation_sam(args, val_loader, epoch, net: nn.Module, clean_dir=True):
 def infer_single_video(
     net: nn.Module,
     imgs_tensor: torch.Tensor,
-    mask_tensor: torch.Tensor = None,  # (optional) for measuring IoU/DICE
-    bbox_dict: dict = None,           # bounding-box prompts: bbox_dict[frame_idx][obj_id] = Tensor(...)
+    mask_tensor: torch.Tensor = None,
+    bbox_dict: dict = None,
     prompt: str = "bbox",
     prompt_freq: int = 2,
     device_str: str = "cuda",
     visualize: bool = False,
     out_dir: str = "./infer_outputs",
     case_name: str = "case0",
-    threshold_list = (0.5,),  # or (0.1,0.3,0.5,0.7,0.9) if you want multi-threshold
+    threshold_list=(0.5,),
 ):
     """
-    Perform multi-frame (3D) inference on 'imgs_tensor' using the existing 'add_new_bbox'
-    and 'propagate_in_video' calls from SAM2VideoPredictor.
-
-    net:
-      - Should be an instance of SAM2VideoPredictor in eval mode
-      - Must have the methods: val_init_state(...), add_new_bbox(...), propagate_in_video(...)
-
-    imgs_tensor:
-      - shape [T, 3, H, W] or [T, C, H, W], in float32
-      - entire volume, not just 2 frames
-
-    mask_tensor:
-      - optional ground truth [T, 1, H, W], for computing IoU/Dice
-
-    bbox_dict:
-      - bounding-box dictionary: e.g., bbox_dict[t][0] = bounding_box_tensor
-      - bounding_box_tensor shape [1,4]: (x_min, y_min, x_max, y_max)
-
-    prompt:
-      - "bbox" or "click" (here we demonstrate "bbox")
-
-    prompt_freq:
-      - how often to add prompts (e.g. every 2 frames)
-
-    device_str:
-      - "cuda" or "cpu"
-
-    visualize:
-      - whether to save per-frame predictions as PNG
-
-    out_dir, case_name:
-      - where to save the optional PNG results
-
-    threshold_list:
-      - thresholds used to measure IoU/Dice if mask_tensor is provided
-      - commonly (0.5,) or multiple thresholds
-
-    Returns:
-      A dict with:
-        "prediction_3d": shape [T,1,H,W] of raw predicted masks (after sigmoid)
-        "mean_iou":  averaged IoU across frames (if mask_tensor is provided)
-        "mean_dice": averaged Dice across frames (if mask_tensor is provided)
+    Multi-frame inference with optional bounding box prompts
     """
 
     import os
+    import numpy as np
     import torch
     import matplotlib.pyplot as plt
-    import numpy as np
+    
 
     device = torch.device(device_str)
     net.eval()
 
     os.makedirs(out_dir, exist_ok=True)
 
-    # 1) Move the entire volume to device
-    imgs_tensor = imgs_tensor.to(device=device, dtype=torch.float32)
+    # -------------------------------------------------------------------------
+    # 1) Move the entire volume to device, verify shape
+    # -------------------------------------------------------------------------
 
-    # Move optional GT mask to device
+    imgs_tensor = imgs_tensor.to(device=device, dtype=torch.float32)
+    print(f"[DEBUG] Inference input shape = {tuple(imgs_tensor.shape)} "
+          f"(should be [T,3,H,W] with T ~ #slices)")
+    print(f"[DEBUG] Input shape: {imgs_tensor.shape}")
+    print(f"[DEBUG] Volume stats - min: {imgs_tensor.min():.3f}, max: {imgs_tensor.max():.3f}, mean: {imgs_tensor.mean():.3f}")
+    if mask_tensor is not None:
+        print(f"[DEBUG] Mask stats - unique values: {torch.unique(mask_tensor).tolist()}")
+
+
+    # e.g. for a 48-slice volume => (48, 3, 1024, 1024)
+
     if mask_tensor is not None:
         mask_tensor = mask_tensor.to(device=device, dtype=torch.float32)
 
-    # 2) Initialize inference state in val-mode
+    # 2) Initialize inference state
     inference_state = net.val_init_state(imgs_tensor=imgs_tensor)
 
     num_frames = imgs_tensor.shape[0]
 
-    # 3) Add prompts (bounding boxes) for frames at the given prompt frequency
-    #    but we must call net.add_new_bbox, not val_add_new_bbox
+    print(f"[DEBUG] num_frames = {num_frames}")
+    if num_frames > 200:  # Just a soft check. If you see 1024 here, something’s off
+        print("[WARN] Very large T dimension. Did you accidentally transpose?")
+
+    # 3) Add bounding-box prompts
     prompt_frames = range(0, num_frames, prompt_freq)
+    print(f"[DEBUG] Prompt frames: {list(prompt_frames)}")
 
     if bbox_dict is not None and prompt == "bbox":
+
+        print(f"[DEBUG] Found bboxes for frames: {sorted(bbox_dict.keys())}")
+        example_frame = next(iter(bbox_dict.keys()))
+        print(f"[DEBUG] Example bbox for frame {example_frame}: {bbox_dict[example_frame]}")
+        slices_with_box = []
+        for z in sorted(bbox_dict.keys()):
+            # check if there's a non-empty box
+            if len(bbox_dict[z])>0:
+                slices_with_box.append(z)
+        # sub-sample if desired
+        prompt_frames = slices_with_box[::2]  # every 2nd
+
+
         for f_idx in prompt_frames:
             if f_idx in bbox_dict:
                 for obj_id, bbox_tsr in bbox_dict[f_idx].items():
-                    # This calls the existing inference-mode method `add_new_bbox`
-                    # in sam2_video_predictor.py
+                    # shape => [1,4], i.e. [x_min,y_min,x_max,y_max]
+                    box = bbox_tsr[0].tolist()  # [x_min, y_min, x_max, y_max]
+                    x_min, y_min, x_max, y_max = box
+
+                    # quick sanity check:
+                    if x_max <= x_min or y_max <= y_min:
+                        print(f"[WARN] Invalid BBox at frame={f_idx} obj_id={obj_id}: "
+                              f"x_min={x_min}, y_min={y_min}, x_max={x_max}, y_max={y_max}")
+
                     net.add_new_bbox(
                         inference_state=inference_state,
                         frame_idx=f_idx,
                         obj_id=obj_id,
                         bbox=bbox_tsr,
-                        clear_old_points=False,  # or True, up to you
-                        normalize_coords=True
+                        clear_old_points=False,
+                        normalize_coords=True,
                     )
 
     elif bbox_dict is not None and prompt == "click":
-        # If you had clicks, you'd do net.add_new_points(...) here
-        # but we won't detail that
+        # (unchanged)
         pass
 
-    else:
-        # No prompts => purely forward pass. Then we won't call add_new_bbox
-        pass
-
-    # 4) Propagate in video from frame=0 to the end
-    #    This yields a generator of (frame_idx, obj_ids, mask_logits) per frame
-    predicted_logits_dict = {}  # store raw logits for each frame
+    # 4) Propagate in video from frame=0
+    predicted_logits_dict = {}
     with torch.no_grad():
         for frame_idx, obj_ids, mask_logits in net.propagate_in_video(
             inference_state=inference_state,
             start_frame_idx=0,
-            max_frame_num_to_track=num_frames,  # track all frames
+            max_frame_num_to_track=num_frames,
             reverse=False,
         ):
-            # mask_logits shape => [num_objects, H, W]
-            # By default we have only 1 object => shape [1,H,W]
-            # Let's store them
             predicted_logits_dict[frame_idx] = mask_logits.detach().clone()
 
-    # 5) Gather the final predictions in ascending frame index
+    # 5) Gather final predictions in ascending frame index
     predicted_3d_list = []
     for t in range(num_frames):
         if t not in predicted_logits_dict:
-            # If we never wrote anything, produce zeros
-            shape_2d = imgs_tensor.shape[2:]  # (H,W)
+            # If the model never wrote anything for this frame => zeros
+            h, w = imgs_tensor.shape[2], imgs_tensor.shape[3]
             predicted_3d_list.append(
-                torch.zeros((1, *shape_2d), device=device, dtype=torch.float32)
+                torch.zeros((1, h, w), device=device, dtype=torch.float32)
             )
         else:
             predicted_3d_list.append(predicted_logits_dict[t])
 
-    # Combine into shape [T,1,H,W]
-    predicted_3d = torch.stack(predicted_3d_list, dim=0)  # [T,1,H,W]
-
-    # Convert from logits => probabilities
+    # shape => [T,1,H,W]
+    predicted_3d = torch.stack(predicted_3d_list, dim=0)
     predicted_3d = torch.sigmoid(predicted_3d)
 
-    # 6) Evaluate IoU / Dice if we have GT
+    # 6) Evaluate IoU / Dice if ground truth is available
     iou_accum = 0.0
     dice_accum = 0.0
     count_slices = 0
-
     if mask_tensor is not None:
         for t in range(num_frames):
-            pred_slice = predicted_3d[t]   # shape [1,H,W]
-            gt_slice   = mask_tensor[t]    # shape [1,H,W]
-            # Evaluate for each threshold in threshold_list
+            pred_slice = predicted_3d[t]   # shape => [1,H,W]
+            gt_slice = mask_tensor[t]      # shape => [1,H,W]
             for th in threshold_list:
                 pred_bin = (pred_slice > th).float()
-                gt_bin   = (gt_slice   > th).float()
+                gt_bin = (gt_slice > th).float()
                 intersect = (pred_bin * gt_bin).sum()
-                union     = (pred_bin + gt_bin - pred_bin*gt_bin).sum() + 1e-6
-                iou_val   = (intersect / union).item()
-                dice_val  = (2.0 * intersect / (pred_bin.sum()+gt_bin.sum()+1e-6)).item()
-
-                # If we only accumulate at threshold=0.5, do:
-                if abs(th-0.5)<1e-3:
-                    iou_accum  += iou_val
+                union = (pred_bin + gt_bin - pred_bin * gt_bin).sum() + 1e-6
+                iou_val = float(intersect / union)
+                dice_val = float(2.0 * intersect / (pred_bin.sum() + gt_bin.sum() + 1e-6))
+                if abs(th - 0.5) < 1e-3:
+                    iou_accum += iou_val
                     dice_accum += dice_val
                     count_slices += 1
 
-    mean_iou  = (iou_accum / count_slices) if (count_slices>0) else 0.0
-    mean_dice = (dice_accum / count_slices) if (count_slices>0) else 0.0
+    mean_iou = iou_accum / count_slices if count_slices > 0 else 0.0
+    mean_dice = dice_accum / count_slices if count_slices > 0 else 0.0
 
     # 7) Optional visualization
     if visualize:
-        import numpy as np
-        import os
         os.makedirs(os.path.join(out_dir, case_name), exist_ok=True)
-
         for t in range(num_frames):
-            # shape [C,H,W] => for the MRI
-            # or if your input is [3,H,W] => do something like:
-            input_np = imgs_tensor[t].cpu().numpy()  # [3,H,W]
-            # shape [H,W]
-            pred_np  = (predicted_3d[t].cpu().numpy()[0] > 0.5).astype(np.uint8)
+            # shape => [3,H,W]
+            input_np = imgs_tensor[t].cpu().numpy()
 
-            fig, axes = plt.subplots(1,2, figsize=(8,4))
-            axes[0].imshow( np.transpose(input_np, (1,2,0)) )  # (H,W,3)
+            # shape => [1,H,W] => squeeze => [H,W]
+            pred_slice = predicted_3d[t].squeeze().cpu().numpy()
+            pred_slice = (pred_slice > 0.5).astype(np.uint8)
+
+            fig, axes = plt.subplots(1, 2, figsize=(9, 4))
+            axes[0].imshow(np.transpose(input_np, (1, 2, 0)), cmap="gray")
             axes[0].set_title(f"Input slice {t}")
             axes[0].axis("off")
 
-            axes[1].imshow(pred_np, cmap="jet")
-            axes[1].set_title("Prediction >0.5")
+            axes[1].imshow(pred_slice, cmap="jet")
+            axes[1].set_title(f"Pred (th=0.5), slice={t}")
             axes[1].axis("off")
 
             save_path = os.path.join(out_dir, case_name, f"frame_{t:03d}.png")
@@ -439,7 +477,7 @@ def infer_single_video(
             plt.close()
 
     return {
-        "prediction_3d": predicted_3d,  # shape [T,1,H,W]
-        "mean_iou":  mean_iou,
+        "prediction_3d": predicted_3d,
+        "mean_iou": mean_iou,
         "mean_dice": mean_dice,
     }

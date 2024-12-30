@@ -78,7 +78,7 @@ def main():
     best_acc = 0.0
     best_tol = 1e4
     best_dice = 0.0
-    early_stopping_patience = 30
+    early_stopping_patience = 50
     best_validation_dice = 0
     patience_counter = 0
 

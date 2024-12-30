@@ -10,6 +10,7 @@ from typing import List, Tuple, Union
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.utils.checkpoint as checkpoint
 
 from sam2_train.modeling.backbones.utils import (
     PatchEmbed,
@@ -132,40 +133,50 @@ class MultiScaleBlock(nn.Module):
 
         if dim != dim_out:
             self.proj = nn.Linear(dim, dim_out)
+        
+        ###ADDED
+        self.use_grad_ckpt = False
 
+        ### CHANGED:
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        If self.use_grad_ckpt is True, we run the block via checkpoint.checkpoint(...),
+        otherwise we do a normal forward pass.
+        """
+        if self.use_grad_ckpt:
+            return checkpoint.checkpoint(self._forward_impl, x)
+        else:
+            return self._forward_impl(x)
+
+    ### ADDED:
+    def _forward_impl(self, x: torch.Tensor) -> torch.Tensor:
+        # EXACT logic from your old forward
         shortcut = x  # B, H, W, C
         x = self.norm1(x)
 
-        # Skip connection
         if self.dim != self.dim_out:
             shortcut = do_pool(self.proj(x), self.pool)
 
-        # Window partition
         window_size = self.window_size
         if window_size > 0:
             H, W = x.shape[1], x.shape[2]
             x, pad_hw = window_partition(x, window_size)
 
-        # Window Attention + Q Pooling (if stage change)
         x = self.attn(x)
         if self.q_stride:
-            # Shapes have changed due to Q pooling
             window_size = self.window_size // self.q_stride[0]
             H, W = shortcut.shape[1:3]
-
             pad_h = (window_size - H % window_size) % window_size
             pad_w = (window_size - W % window_size) % window_size
             pad_hw = (H + pad_h, W + pad_w)
 
-        # Reverse window partition
         if self.window_size > 0:
             x = window_unpartition(x, window_size, pad_hw, (H, W))
 
         x = shortcut + self.drop_path(x)
-        # MLP
         x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
+
 
 
 class Hiera(nn.Module):
@@ -198,8 +209,11 @@ class Hiera(nn.Module):
             20,
         ),
         return_interm_layers=True,  # return feats from every stage
+        use_grad_ckpt: bool = False,
     ):
         super().__init__()
+
+        self.use_grad_ckpt = use_grad_ckpt
 
         assert len(stages) == len(window_spec)
         self.window_spec = window_spec
@@ -256,6 +270,8 @@ class Hiera(nn.Module):
                 q_stride=self.q_stride if i in self.q_pool_blocks else None,
                 window_size=window_size,
             )
+
+            block.use_grad_ckpt = self.use_grad_ckpt
 
             embed_dim = dim_out
             self.blocks.append(block)

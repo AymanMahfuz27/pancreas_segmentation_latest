@@ -1,0 +1,94 @@
+/project/func_3d/function.py:35: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler()
+INFO:root:Loaded checkpoint sucessfully
+INFO:root:Namespace(net='sam2', encoder='vit_b', exp_name='pancreas_full_training', vis=False, train_vis=False, prompt='bbox', prompt_freq=2, pretrain=None, val_freq=5, gpu=True, gpu_device=0, image_size=1024, out_size=1024, distributed='0', dataset='pancreas', sam_ckpt='/work/checkpoints/sam2_hiera_small.pt', sam_config='sam2_hiera_s', video_length=2, b=1, lr=0.0001, weights=0, multimask_output=0, memory_bank_size=32, data_path='/scratch/pancreas_test_data_preproc', path_helper={'prefix': 'logs/pancreas_full_training_2024_12_27_22_46_32', 'ckpt_path': 'logs/pancreas_full_training_2024_12_27_22_46_32/Model', 'log_path': 'logs/pancreas_full_training_2024_12_27_22_46_32/Log', 'sample_path': 'logs/pancreas_full_training_2024_12_27_22_46_32/Samples'})
+Namespace(net='sam2', encoder='vit_b', exp_name='pancreas_full_training', vis=False, train_vis=False, prompt='bbox', prompt_freq=2, pretrain=None, val_freq=5, gpu=True, gpu_device=0, image_size=1024, out_size=1024, distributed='0', dataset='pancreas', sam_ckpt='/work/checkpoints/sam2_hiera_small.pt', sam_config='sam2_hiera_s', video_length=2, b=1, lr=0.0001, weights=0, multimask_output=0, memory_bank_size=32, data_path='/scratch/pancreas_test_data_preproc', path_helper={'prefix': 'logs/pancreas_full_training_2024_12_27_22_46_32', 'ckpt_path': 'logs/pancreas_full_training_2024_12_27_22_46_32/Model', 'log_path': 'logs/pancreas_full_training_2024_12_27_22_46_32/Log', 'sample_path': 'logs/pancreas_full_training_2024_12_27_22_46_32/Samples'})
+INFO:func_3d.dataset.pancreas:[Training] Found 484 cases at /scratch/pancreas_test_data_preproc
+[Training] Found 484 cases at /scratch/pancreas_test_data_preproc
+INFO:func_3d.dataset.pancreas:[Validation] Found 122 cases at /scratch/pancreas_test_data_preproc
+[Validation] Found 122 cases at /scratch/pancreas_test_data_preproc
+Epoch 0:   0%|          | 0/484 [00:00<?, ?img/s]/opt/conda/envs/medsam2/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py:600: UserWarning: torch.utils.checkpoint: the use_reentrant parameter should be passed explicitly. In version 2.4 we will raise an exception if use_reentrant is not passed. use_reentrant=False is recommended, but if you need to preserve the current default behavior, you can pass use_reentrant=True. Refer to docs for more details on the differences between the two variants.
+  return fn(*args, **kwargs)
+[train_sam Debug] Volume=['Virostko_128290_04_01_13_53_07'] => total_slices=2, nonempty=16, chosen=8
+Epoch 0:   0%|          | 1/484 [00:06<49:16,  6.12s/img][train_sam Debug] Volume=['Virostko_138401_05_01_09_17_15'] => total_slices=2, nonempty=16, chosen=8
+Epoch 0:   0%|          | 2/484 [00:08<29:52,  3.72s/img][train_sam Debug] Volume=['Virostko_130158_04_01_10_31_24'] => total_slices=2, nonempty=13, chosen=7
+Epoch 0:   1%|          | 3/484 [00:09<21:04,  2.63s/img][train_sam Debug] Volume=['Virostko_234353_05_01_08_40_43'] => total_slices=2, nonempty=11, chosen=6
+Epoch 0:   1%|          | 4/484 [00:11<17:34,  2.20s/img][train_sam Debug] Volume=['Virostko_235049_04_01_10_06_50'] => total_slices=2, nonempty=10, chosen=5
+Epoch 0:   1%|          | 5/484 [00:12<14:41,  1.84s/img][train_sam Debug] Volume=['Virostko_227756_04_01_13_32_40'] => total_slices=2, nonempty=15, chosen=8
+Epoch 0:   1%|          | 6/484 [00:13<13:29,  1.69s/img][train_sam Debug] Volume=['Virostko_133933_04_01_11_15_56'] => total_slices=2, nonempty=13, chosen=7
+Epoch 0:   1%|▏         | 7/484 [00:14<12:28,  1.57s/img][train_sam Debug] Volume=['Virostko_232892_03_01_10_44_36'] => total_slices=2, nonempty=14, chosen=7
+Epoch 0:   2%|▏         | 8/484 [00:16<11:54,  1.50s/img][train_sam Debug] Volume=['Virostko_227463_04_01_13_26_18'] => total_slices=2, nonempty=16, chosen=8
+Epoch 0:   2%|▏         | 9/484 [00:17<11:32,  1.46s/img][train_sam Debug] Volume=['Virostko_131373_05_01_14_11_57'] => total_slices=2, nonempty=13, chosen=7
+Epoch 0:   2%|▏         | 10/484 [00:19<11:16,  1.43s/img][train_sam Debug] Volume=['Virostko_136606_03_01_13_30_07'] => total_slices=2, nonempty=11, chosen=6
+Epoch 0:   2%|▏         | 11/484 [00:20<10:49,  1.37s/img][train_sam Debug] Volume=['Virostko_137961_03_01_11_11_30'] => total_slices=2, nonempty=19, chosen=10
+Epoch 0:   2%|▏         | 12/484 [00:21<11:06,  1.41s/img][train_sam Debug] Volume=['Virostko_132574_04_01_14_38_52'] => total_slices=2, nonempty=9, chosen=5
+Epoch 0:   3%|▎         | 13/484 [00:23<10:55,  1.39s/img][train_sam Debug] Volume=['Virostko_130949_04_01_14_07_22'] => total_slices=2, nonempty=14, chosen=7
+Epoch 0:   3%|▎         | 14/484 [00:24<11:26,  1.46s/img][train_sam Debug] Volume=['Virostko_116202_04_01_11_02_10_(WIP_T2W_SPAIR_BH_SENSE)'] => total_slices=2, nonempty=15, chosen=8
+Epoch 0:   3%|▎         | 15/484 [00:26<11:21,  1.45s/img][train_sam Debug] Volume=['Virostko_137518_03_01_14_18_00'] => total_slices=2, nonempty=15, chosen=8
+Epoch 0:   3%|▎         | 16/484 [00:27<11:22,  1.46s/img][train_sam Debug] Volume=['Powers_236110_04_01_10_41_45'] => total_slices=2, nonempty=15, chosen=8
+Epoch 0:   4%|▎         | 17/484 [00:29<11:12,  1.44s/img][train_sam Debug] Volume=['Virostko_130450_05_01_11_35_19'] => total_slices=2, nonempty=15, chosen=8
+Epoch 0:   4%|▎         | 18/484 [00:30<11:06,  1.43s/img][train_sam Debug] Volume=['Virostko_131864_05_01_08_51_08'] => total_slices=2, nonempty=8, chosen=4
+Epoch 0:   4%|▍         | 19/484 [00:31<10:31,  1.36s/img][train_sam Debug] Volume=['Virostko_136554_03_01_12_39_49'] => total_slices=2, nonempty=16, chosen=8
+Epoch 0:   4%|▍         | 20/484 [00:33<10:39,  1.38s/img][train_sam Debug] Volume=['Virostko_226972_04_01_13_21_55'] => total_slices=2, nonempty=17, chosen=9
+Epoch 0:   4%|▍         | 21/484 [00:34<10:49,  1.40s/img][train_sam Debug] Volume=['Virostko_141144_06_01_11_28_50'] => total_slices=2, nonempty=18, chosen=9
+Epoch 0:   5%|▍         | 22/484 [00:36<12:34,  1.63s/img][train_sam Debug] Volume=['Virostko_132883_04_01_12_11_28'] => total_slices=2, nonempty=17, chosen=9
+Epoch 0:   5%|▍         | 23/484 [00:38<12:36,  1.64s/img][train_sam Debug] Volume=['Virostko_229336_04_01_13_06_50'] => total_slices=2, nonempty=12, chosen=6
+Epoch 0:   5%|▍         | 24/484 [00:39<12:00,  1.57s/img][train_sam Debug] Volume=['Virostko_132928_04_01_13_27_50'] => total_slices=2, nonempty=16, chosen=8
+Epoch 0:   5%|▌         | 25/484 [00:41<11:33,  1.51s/img][train_sam Debug] Volume=['Virostko_133048_04_01_15_08_37'] => total_slices=2, nonempty=17, chosen=9
+Epoch 0:   5%|▌         | 26/484 [00:42<11:26,  1.50s/img][train_sam Debug] Volume=['Virostko_228791_10_01_09_18_39'] => total_slices=2, nonempty=16, chosen=8
+Epoch 0:   6%|▌         | 27/484 [00:43<11:05,  1.46s/img][train_sam Debug] Volume=['Virostko_214552_05_01_13_13_23_(WIP_T2W_SPAIR_BH_SENSE)'] => total_slices=2, nonempty=10, chosen=5
+Epoch 0:   6%|▌         | 28/484 [00:45<10:39,  1.40s/img][train_sam Debug] Volume=['Virostko_130515_04_01_09_43_27'] => total_slices=2, nonempty=10, chosen=5
+Epoch 0:   6%|▌         | 29/484 [00:46<10:12,  1.35s/img][train_sam Debug] Volume=['Virostko_233448_03_01_13_32_09'] => total_slices=2, nonempty=13, chosen=7
+Epoch 0:   6%|▌         | 30/484 [00:47<10:15,  1.36s/img][train_sam Debug] Volume=['Virostko_138581_06_01_11_16_48'] => total_slices=2, nonempty=17, chosen=9
+Epoch 0:   6%|▋         | 31/484 [00:50<12:24,  1.64s/img][train_sam Debug] Volume=['Virostko_136236_03_01_13_24_07'] => total_slices=2, nonempty=17, chosen=9
+Epoch 0:   7%|▋         | 32/484 [00:51<12:01,  1.60s/img][train_sam Debug] Volume=['Virostko_137470_03_01_10_35_09'] => total_slices=2, nonempty=14, chosen=7
+Epoch 0:   7%|▋         | 33/484 [00:53<11:55,  1.59s/img][train_sam Debug] Volume=['Virostko_228019_04_01_13_19_14'] => total_slices=2, nonempty=15, chosen=8
+Epoch 0:   7%|▋         | 34/484 [00:54<11:49,  1.58s/img][train_sam Debug] Volume=['Virostko_233405_03_01_08_44_34'] => total_slices=2, nonempty=13, chosen=7
+Epoch 0:   7%|▋         | 35/484 [00:56<11:12,  1.50s/img][train_sam Debug] Volume=['Virostko_132052_04_01_15_47_11'] => total_slices=2, nonempty=19, chosen=10
+Epoch 0:   7%|▋         | 36/484 [00:57<11:10,  1.50s/img][train_sam Debug] Volume=['Virostko_132213_04_01_11_11_46'] => total_slices=2, nonempty=18, chosen=9
+Epoch 0:   8%|▊         | 37/484 [00:58<11:00,  1.48s/img][train_sam Debug] Volume=['Virostko_139398_05_01_13_17_24'] => total_slices=2, nonempty=20, chosen=10
+Epoch 0:   8%|▊         | 38/484 [01:01<12:34,  1.69s/img][train_sam Debug] Volume=['Virostko_142803_06_01_11_36_42'] => total_slices=2, nonempty=19, chosen=10
+Epoch 0:   8%|▊         | 38/484 [01:02<12:13,  1.64s/img]
+Traceback (most recent call last):
+  File "/project/train_3d.py", line 125, in <module>
+    main()
+  File "/project/train_3d.py", line 90, in main
+    loss = function.train_sam(args, net, optimizer, None, nice_train_loader, epoch)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/func_3d/function.py", line 160, in train_sam
+    for out_frame_idx, out_obj_ids, out_mask_logits in net.train_propagate_in_video(
+  File "/project/sam2_train/sam2_video_predictor.py", line 1184, in train_propagate_in_video
+    current_out, pred_masks = self._run_single_frame_inference(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/sam2_train/sam2_video_predictor.py", line 1323, in _run_single_frame_inference
+    ) = self._get_image_feature(inference_state, frame_idx, batch_size)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/sam2_train/sam2_video_predictor.py", line 1279, in _get_image_feature
+    backbone_out = self.forward_image(image)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/sam2_train/modeling/sam2_base.py", line 465, in forward_image
+    backbone_out = self.image_encoder(img_batch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/medsam2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/medsam2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/sam2_train/modeling/backbones/image_encoder.py", line 31, in forward
+    features, pos = self.neck(self.trunk(sample))
+                              ^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/medsam2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/medsam2/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/sam2_train/modeling/backbones/hieradet.py", line 300, in forward
+    x = x + self._get_pos_embed(x.shape[1:3])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/sam2_train/modeling/backbones/hieradet.py", line 289, in _get_pos_embed
+    pos_embed = pos_embed + window_embed.tile(
+                            ^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.00 MiB. GPU 0 has a total capacity of 79.11 GiB of which 12.62 MiB is free. Including non-PyTorch memory, this process has 79.07 GiB memory in use. Of the allocated memory 77.42 GiB is allocated by PyTorch, and 994.22 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+slurmstepd: error: *** JOB 2120009 ON c318-003 CANCELLED AT 2024-12-27T22:47:37 ***

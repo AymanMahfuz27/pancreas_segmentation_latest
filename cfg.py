@@ -14,7 +14,7 @@ def parse_args():
     parser.add_argument('-val_freq',type=int,default=5,help='interval between each validation')
     parser.add_argument('-gpu', type=bool, default=True, help='use gpu or not')
     parser.add_argument('-gpu_device', type=int, default=0, help='use which gpu')
-    parser.add_argument('-image_size', type=int, default=1024, help='image_size')
+    parser.add_argument('-image_size', type=int, default=256, help='image_size')
     parser.add_argument('-out_size', type=int, default=1024, help='output_size')
     parser.add_argument('-distributed', default='none' ,type=str,help='multi GPU ids to use')
     parser.add_argument('-dataset', default='btcv' ,type=str,help='dataset name')
@@ -26,11 +26,7 @@ def parse_args():
     parser.add_argument('-weights', type=str, default = 0, help='the weights file you want to test')
     parser.add_argument('-multimask_output', type=int, default=1 , help='the number of masks output for multi-class segmentation')
     parser.add_argument('-memory_bank_size', type=int, default=16, help='sam 2d memory bank size')
-    parser.add_argument(
-    '-data_path',
-    type=str,
-    default='./data/btcv',
-    help='The path of segmentation data')
+    parser.add_argument('-data_path', type=str, default='/scratch/09999/aymanmahfuz/pancreas_test_data_preproc', help='Path to preprocessed data')
     opt = parser.parse_args()
 
     return opt

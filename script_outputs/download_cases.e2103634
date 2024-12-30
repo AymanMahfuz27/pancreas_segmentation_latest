@@ -1,203 +1,0 @@
-2024-12-16 17:11:43,248 - INFO - Found 100 cases to download
-Downloading cases:   0%|          | 0/100 [00:00<?, ?it/s]2024-12-16 17:11:44,475 - INFO - Downloaded mri.dcm for case Virostka_235023_06_01_09_59_51
-2024-12-16 17:11:44,961 - INFO - Downloaded mri.dcm for case Viroskto_233874_03_01_09_44_24
-2024-12-16 17:11:45,106 - INFO - Downloaded mri.dcm for case Viroskto_233876_03_01_11_41_05
-2024-12-16 17:11:47,361 - INFO - Downloaded mri.dcm for case Viroskto_233873_04_01_09_11_10
-2024-12-16 17:11:47,428 - INFO - Downloaded mri.dcm for case Viroskto_233875_04_01_10_29_37
-2024-12-16 17:11:50,300 - INFO - Downloaded mask.dcm for case Viroskto_233876_03_01_11_41_05
-2024-12-16 17:11:50,300 - INFO - Downloaded mask.dcm for case Viroskto_233874_03_01_09_44_24
-2024-12-16 17:11:50,575 - INFO - Downloaded mri.dcm for case Moore_142733_06_01_11_30_49
-2024-12-16 17:11:50,722 - INFO - Downloaded mask.dcm for case Virostka_235023_06_01_09_59_51
-2024-12-16 17:11:50,797 - INFO - Downloaded mri.dcm for case Viroskto_233877_03_01_12_19_12
-2024-12-16 17:11:50,802 - INFO - Downloaded mri.dcm for case VIROSTKO_233256_04_01_13_18_45
-2024-12-16 17:11:50,887 - INFO - Downloaded mri.dcm for case Virostko_115687_04_01_10_53_56_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:50,890 - INFO - Downloaded mask.dcm for case Viroskto_233873_04_01_09_11_10
-2024-12-16 17:11:50,904 - INFO - Downloaded mri.dcm for case Virostko_000000_03_01_10_11_14
-2024-12-16 17:11:51,053 - INFO - Downloaded mri.dcm for case Powers_236110_04_01_10_41_45
-2024-12-16 17:11:51,284 - INFO - Downloaded mask.dcm for case Moore_142733_06_01_11_30_49
-Downloading cases:   1%|          | 1/100 [00:07<13:08,  7.97s/it]2024-12-16 17:11:51,332 - INFO - Downloaded mask.dcm for case VIROSTKO_233256_04_01_13_18_45
-2024-12-16 17:11:51,353 - INFO - Downloaded mask.dcm for case Viroskto_233877_03_01_12_19_12
-2024-12-16 17:11:51,379 - INFO - Downloaded mask.dcm for case Virostko_115687_04_01_10_53_56_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,447 - INFO - Downloaded mri.dcm for case Virostko_115785_04_01_13_08_06_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,482 - INFO - Downloaded mri.dcm for case Virostko_115724_10_01_14_22_56_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,516 - INFO - Downloaded mask.dcm for case Powers_236110_04_01_10_41_45
-Downloading cases:   2%|▏         | 2/100 [00:08<05:34,  3.42s/it]2024-12-16 17:11:51,587 - INFO - Downloaded mask.dcm for case Viroskto_233875_04_01_10_29_37
-2024-12-16 17:11:51,601 - INFO - Downloaded mri.dcm for case Virostko_115729_04_01_13_14_47_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,738 - INFO - Downloaded mri.dcm for case Virostko_116200_05_01_10_26_16_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,785 - INFO - Downloaded mask.dcm for case Virostko_000000_03_01_10_11_14
-Downloading cases:  10%|█         | 10/100 [00:08<00:42,  2.12it/s]2024-12-16 17:11:51,873 - INFO - Downloaded mask.dcm for case Virostko_115785_04_01_13_08_06_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,890 - INFO - Downloaded mask.dcm for case Virostko_115724_10_01_14_22_56_(WIP_T2W_SPAIR_BH_SENSE)
-Downloading cases:  12%|█▏        | 12/100 [00:08<00:32,  2.69it/s]2024-12-16 17:11:51,891 - INFO - Downloaded mri.dcm for case Virostko_116194_04_01_14_09_34_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,947 - INFO - Downloaded mri.dcm for case Virostko_115982_04_01_15_19_37_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,950 - INFO - Downloaded mri.dcm for case Virostko_116348_04_01_15_15_10_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,986 - INFO - Downloaded mri.dcm for case Virostko_116274_04_01_14_15_55_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:51,999 - INFO - Downloaded mri.dcm for case Virostko_116202_04_01_11_02_10_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,047 - INFO - Downloaded mask.dcm for case Virostko_116200_05_01_10_26_16_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,070 - INFO - Downloaded mask.dcm for case Virostko_115729_04_01_13_14_47_(WIP_T2W_SPAIR_BH_SENSE)
-Downloading cases:  14%|█▍        | 14/100 [00:08<00:25,  3.32it/s]2024-12-16 17:11:52,250 - INFO - Downloaded mri.dcm for case Virostko_116635_05_01_16_36_54_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,345 - INFO - Downloaded mask.dcm for case Virostko_115982_04_01_15_19_37_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,354 - INFO - Downloaded mask.dcm for case Virostko_116348_04_01_15_15_10_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,381 - INFO - Downloaded mri.dcm for case Virostko_126582_04_01_08_27_50
-2024-12-16 17:11:52,388 - INFO - Downloaded mri.dcm for case Virostko_116667_04_01_13_15_02_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,392 - INFO - Downloaded mri.dcm for case Virostko_127082_04_01_13_37_51
-2024-12-16 17:11:52,426 - INFO - Downloaded mask.dcm for case Virostko_116194_04_01_14_09_34_(WIP_T2W_SPAIR_BH_SENSE)
-Downloading cases:  16%|█▌        | 16/100 [00:09<00:22,  3.73it/s]2024-12-16 17:11:52,514 - INFO - Downloaded mask.dcm for case Virostko_116202_04_01_11_02_10_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,613 - INFO - Downloaded mask.dcm for case Virostko_116274_04_01_14_15_55_(WIP_T2W_SPAIR_BH_SENSE)
-Downloading cases:  19%|█▉        | 19/100 [00:09<00:15,  5.17it/s]2024-12-16 17:11:52,697 - INFO - Downloaded mri.dcm for case Virostko_126840_04_01_10_20_05
-2024-12-16 17:11:52,701 - INFO - Downloaded mask.dcm for case Virostko_116635_05_01_16_36_54_(WIP_T2W_SPAIR_BH_SENSE)
-2024-12-16 17:11:52,733 - INFO - Downloaded mask.dcm for case Virostko_116667_04_01_13_15_02_(WIP_T2W_SPAIR_BH_SENSE)
-Downloading cases:  22%|██▏       | 22/100 [00:09<00:11,  7.09it/s]2024-12-16 17:11:52,911 - INFO - Downloaded mri.dcm for case Virostko_127127_05_01_15_18_23
-2024-12-16 17:11:52,958 - INFO - Downloaded mri.dcm for case Virostko_127132_04_01_09_07_52
-2024-12-16 17:11:52,977 - INFO - Downloaded mask.dcm for case Virostko_127082_04_01_13_37_51
-2024-12-16 17:11:52,994 - INFO - Downloaded mri.dcm for case Virostko_127128_04_01_15_55_16
-2024-12-16 17:11:52,995 - INFO - Downloaded mask.dcm for case Virostko_126840_04_01_10_20_05
-2024-12-16 17:11:53,020 - INFO - Downloaded mri.dcm for case Virostko_127131_04_01_08_38_46
-2024-12-16 17:11:53,080 - INFO - Downloaded mri.dcm for case Virostko_127126_04_01_14_38_36
-2024-12-16 17:11:53,150 - INFO - Downloaded mask.dcm for case Virostko_126582_04_01_08_27_50
-Downloading cases:  24%|██▍       | 24/100 [00:09<00:11,  6.34it/s]2024-12-16 17:11:53,156 - INFO - Downloaded mri.dcm for case Virostko_127451_04_01_14_28_14
-2024-12-16 17:11:53,198 - INFO - Downloaded mask.dcm for case Virostko_127127_05_01_15_18_23
-2024-12-16 17:11:53,374 - INFO - Downloaded mask.dcm for case Virostko_127132_04_01_09_07_52
-2024-12-16 17:11:53,391 - INFO - Downloaded mask.dcm for case Virostko_127131_04_01_08_38_46
-2024-12-16 17:11:53,447 - INFO - Downloaded mask.dcm for case Virostko_127128_04_01_15_55_16
-2024-12-16 17:11:53,450 - INFO - Downloaded mri.dcm for case Virostko_127651_04_01_14_16_55
-2024-12-16 17:11:53,481 - INFO - Downloaded mri.dcm for case Virostko_128120_05_01_14_26_19
-2024-12-16 17:11:53,511 - INFO - Downloaded mask.dcm for case Virostko_127451_04_01_14_28_14
-2024-12-16 17:11:53,667 - INFO - Downloaded mri.dcm for case Virostko_128077_04_01_08_24_44
-2024-12-16 17:11:53,674 - INFO - Downloaded mri.dcm for case Virostko_128290_04_01_13_53_07
-2024-12-16 17:11:53,701 - INFO - Downloaded mask.dcm for case Virostko_127126_04_01_14_38_36
-Downloading cases:  26%|██▌       | 26/100 [00:10<00:13,  5.31it/s]2024-12-16 17:11:53,797 - INFO - Downloaded mask.dcm for case Virostko_127651_04_01_14_16_55
-2024-12-16 17:11:53,906 - INFO - Downloaded mask.dcm for case Virostko_128120_05_01_14_26_19
-2024-12-16 17:11:53,922 - INFO - Downloaded mri.dcm for case Virostko_127665_04_01_11_04_33
-2024-12-16 17:11:53,964 - INFO - Downloaded mri.dcm for case Virostko_128289_04_01_13_21_27
-2024-12-16 17:11:54,018 - INFO - Downloaded mri.dcm for case Virostko_128314_04_01_14_04_36
-2024-12-16 17:11:54,096 - INFO - Downloaded mri.dcm for case Virostko_128306_04_01_09_50_13
-2024-12-16 17:11:54,127 - INFO - Downloaded mri.dcm for case Virostko_128321_04_01_13_17_49
-2024-12-16 17:11:54,177 - INFO - Downloaded mri.dcm for case Virostko_128312_04_01_13_18_17
-2024-12-16 17:11:54,209 - INFO - Downloaded mask.dcm for case Virostko_127665_04_01_11_04_33
-2024-12-16 17:11:54,259 - INFO - Downloaded mask.dcm for case Virostko_128290_04_01_13_53_07
-2024-12-16 17:11:54,395 - INFO - Downloaded mask.dcm for case Virostko_128077_04_01_08_24_44
-2024-12-16 17:11:54,400 - INFO - Downloaded mask.dcm for case Virostko_128306_04_01_09_50_13
-2024-12-16 17:11:54,464 - INFO - Downloaded mask.dcm for case Virostko_128314_04_01_14_04_36
-2024-12-16 17:11:54,468 - INFO - Downloaded mask.dcm for case Virostko_128321_04_01_13_17_49
-2024-12-16 17:11:54,682 - INFO - Downloaded mask.dcm for case Virostko_128289_04_01_13_21_27
-2024-12-16 17:11:54,869 - INFO - Downloaded mask.dcm for case Virostko_128312_04_01_13_18_17
-2024-12-16 17:11:55,069 - INFO - Downloaded mri.dcm for case Virostko_128927_04_01_14_44_59
-2024-12-16 17:12:00,253 - INFO - Downloaded mri.dcm for case Virostko_128672_05_01_14_19_54
-2024-12-16 17:12:00,256 - INFO - Downloaded mri.dcm for case Virostko_128322_06_01_14_00_54
-2024-12-16 17:12:00,257 - INFO - Downloaded mri.dcm for case Virostko_127566_04_01_16_18_43
-2024-12-16 17:12:00,372 - INFO - Downloaded mri.dcm for case Virostko_128797_05_01_13_33_29
-2024-12-16 17:12:00,632 - INFO - Downloaded mask.dcm for case Virostko_127566_04_01_16_18_43
-Downloading cases:  32%|███▏      | 32/100 [00:17<00:47,  1.43it/s]2024-12-16 17:12:00,637 - INFO - Downloaded mask.dcm for case Virostko_128672_05_01_14_19_54
-2024-12-16 17:12:00,676 - INFO - Downloaded mask.dcm for case Virostko_128797_05_01_13_33_29
-2024-12-16 17:12:04,805 - INFO - Downloaded mri.dcm for case Virostko_128674_04_01_14_50_12
-2024-12-16 17:12:04,807 - INFO - Downloaded mri.dcm for case Virostko_128799_04_01_14_09_25
-2024-12-16 17:12:04,807 - INFO - Downloaded mri.dcm for case Virostko_128801_04_01_14_47_48
-2024-12-16 17:12:04,818 - INFO - Downloaded mri.dcm for case Virostko_128558_04_01_11_17_21
-2024-12-16 17:12:04,851 - INFO - Downloaded mri.dcm for case Virostko_128938_04_01_13_17_32
-2024-12-16 17:12:04,872 - INFO - Downloaded mask.dcm for case Virostko_128927_04_01_14_44_59
-2024-12-16 17:12:05,256 - INFO - Downloaded mri.dcm for case Virostko_129885_04_01_13_21_45
-2024-12-16 17:12:05,294 - INFO - Downloaded mask.dcm for case Virostko_128674_04_01_14_50_12
-2024-12-16 17:12:05,340 - INFO - Downloaded mask.dcm for case Virostko_128799_04_01_14_09_25
-2024-12-16 17:12:05,915 - INFO - Downloaded mri.dcm for case Virostko_130149_04_01_10_53_28
-2024-12-16 17:12:06,175 - INFO - Downloaded mask.dcm for case Virostko_128322_06_01_14_00_54
-Downloading cases:  43%|████▎     | 43/100 [00:22<00:33,  1.71it/s]2024-12-16 17:12:06,204 - INFO - Downloaded mri.dcm for case Virostko_129905_04_01_10_39_44
-2024-12-16 17:12:06,285 - INFO - Downloaded mri.dcm for case Virostko_129432_04_01_16_15_27
-2024-12-16 17:12:06,312 - INFO - Downloaded mri.dcm for case Virostko_129052_04_01_16_27_49
-2024-12-16 17:12:06,341 - INFO - Downloaded mask.dcm for case Virostko_128558_04_01_11_17_21
-Downloading cases:  44%|████▍     | 44/100 [00:23<00:31,  1.80it/s]2024-12-16 17:12:06,344 - INFO - Downloaded mask.dcm for case Virostko_128938_04_01_13_17_32
-2024-12-16 17:12:06,408 - INFO - Downloaded mask.dcm for case Virostko_130149_04_01_10_53_28
-2024-12-16 17:12:06,441 - INFO - Downloaded mask.dcm for case Virostko_128801_04_01_14_47_48
-2024-12-16 17:12:06,668 - INFO - Downloaded mask.dcm for case Virostko_129885_04_01_13_21_45
-2024-12-16 17:12:06,690 - INFO - Downloaded mask.dcm for case Virostko_129905_04_01_10_39_44
-2024-12-16 17:12:06,920 - INFO - Downloaded mri.dcm for case Virostko_130158_04_01_10_31_24
-2024-12-16 17:12:06,973 - INFO - Downloaded mri.dcm for case Virostko_129800_04_01_08_57_30
-2024-12-16 17:12:07,068 - INFO - Downloaded mri.dcm for case Virostko_130157_08_01_10_06_34
-2024-12-16 17:12:07,125 - INFO - Downloaded mri.dcm for case Virostko_130215_04_01_10_16_06
-2024-12-16 17:12:07,145 - INFO - Downloaded mask.dcm for case Virostko_129432_04_01_16_15_27
-2024-12-16 17:12:07,345 - INFO - Downloaded mask.dcm for case Virostko_130158_04_01_10_31_24
-2024-12-16 17:12:07,485 - INFO - Downloaded mri.dcm for case Virostko_130151_05_01_11_59_31
-2024-12-16 17:12:07,555 - INFO - Downloaded mask.dcm for case Virostko_130157_08_01_10_06_34
-2024-12-16 17:12:07,565 - INFO - Downloaded mri.dcm for case Virostko_130186_04_01_14_12_51
-2024-12-16 17:12:07,582 - INFO - Downloaded mask.dcm for case Virostko_130215_04_01_10_16_06
-2024-12-16 17:12:07,608 - INFO - Downloaded mri.dcm for case Virostko_130212_04_01_12_16_51
-2024-12-16 17:12:07,665 - INFO - Downloaded mri.dcm for case Virostko_130189_07_01_14_54_27
-2024-12-16 17:12:07,794 - INFO - Downloaded mri.dcm for case Virostko_130273_04_01_14_02_53
-2024-12-16 17:12:08,041 - INFO - Downloaded mask.dcm for case Virostko_130189_07_01_14_54_27
-2024-12-16 17:12:08,120 - INFO - Downloaded mask.dcm for case Virostko_130186_04_01_14_12_51
-2024-12-16 17:12:08,150 - INFO - Downloaded mask.dcm for case Virostko_130273_04_01_14_02_53
-2024-12-16 17:12:10,429 - INFO - Downloaded mask.dcm for case Virostko_129052_04_01_16_27_49
-Downloading cases:  52%|█████▏    | 52/100 [00:27<00:25,  1.87it/s]2024-12-16 17:12:10,436 - INFO - Downloaded mask.dcm for case Virostko_130151_05_01_11_59_31
-2024-12-16 17:12:10,452 - INFO - Downloaded mri.dcm for case Virostko_130272_04_01_13_17_00
-2024-12-16 17:12:10,461 - INFO - Downloaded mask.dcm for case Virostko_129800_04_01_08_57_30
-2024-12-16 17:12:10,595 - INFO - Downloaded mri.dcm for case Virostko_130285_05_01_16_33_13
-2024-12-16 17:12:10,618 - INFO - Downloaded mask.dcm for case Virostko_130212_04_01_12_16_51
-Downloading cases:  63%|██████▎   | 63/100 [00:27<00:10,  3.40it/s]2024-12-16 17:12:10,622 - INFO - Downloaded mri.dcm for case Virostko_130284_04_01_15_23_43
-2024-12-16 17:12:10,762 - INFO - Downloaded mri.dcm for case Virostko_130294_04_01_13_56_05
-2024-12-16 17:12:10,772 - INFO - Downloaded mri.dcm for case Virostko_130287_05_01_17_39_21
-2024-12-16 17:12:10,786 - INFO - Downloaded mri.dcm for case Virostko_130293_04_01_13_23_32
-2024-12-16 17:12:10,874 - INFO - Downloaded mri.dcm for case Virostko_130286_04_01_17_04_27
-2024-12-16 17:12:10,913 - INFO - Downloaded mask.dcm for case Virostko_130285_05_01_16_33_13
-2024-12-16 17:12:11,009 - INFO - Downloaded mri.dcm for case Virostko_130354_04_01_09_15_22
-2024-12-16 17:12:11,267 - INFO - Downloaded mri.dcm for case Virostko_130424_04_01_09_42_53
-2024-12-16 17:12:11,271 - INFO - Downloaded mask.dcm for case Virostko_130272_04_01_13_17_00
-Downloading cases:  66%|██████▌   | 66/100 [00:27<00:09,  3.54it/s]2024-12-16 17:12:11,351 - INFO - Downloaded mask.dcm for case Virostko_130293_04_01_13_23_32
-2024-12-16 17:12:11,567 - INFO - Downloaded mask.dcm for case Virostko_130354_04_01_09_15_22
-2024-12-16 17:12:11,651 - INFO - Downloaded mask.dcm for case Virostko_130424_04_01_09_42_53
-2024-12-16 17:12:11,730 - INFO - Downloaded mri.dcm for case Virostko_130428_04_01_11_09_48
-2024-12-16 17:12:12,157 - INFO - Downloaded mask.dcm for case Virostko_130428_04_01_11_09_48
-2024-12-16 17:12:12,209 - INFO - Downloaded mask.dcm for case Virostko_130287_05_01_17_39_21
-2024-12-16 17:12:12,646 - INFO - Downloaded mri.dcm for case Virostko_130426_04_01_10_21_42
-2024-12-16 17:12:12,678 - INFO - Downloaded mask.dcm for case Virostko_130284_04_01_15_23_43
-Downloading cases:  68%|██████▊   | 68/100 [00:29<00:10,  2.97it/s]2024-12-16 17:12:12,731 - INFO - Downloaded mask.dcm for case Virostko_130294_04_01_13_56_05
-2024-12-16 17:12:12,769 - INFO - Downloaded mri.dcm for case Virostko_130515_04_01_09_43_27
-2024-12-16 17:12:12,775 - INFO - Downloaded mri.dcm for case Virostko_130516_04_01_10_15_17
-2024-12-16 17:12:12,780 - INFO - Downloaded mri.dcm for case Virostko_130406_04_01_14_41_01
-2024-12-16 17:12:12,827 - INFO - Downloaded mri.dcm for case Virostko_130450_05_01_11_35_19
-2024-12-16 17:12:12,851 - INFO - Downloaded mask.dcm for case Virostko_130286_04_01_17_04_27
-Downloading cases:  70%|███████   | 70/100 [00:29<00:08,  3.36it/s]2024-12-16 17:12:12,954 - INFO - Downloaded mri.dcm for case Virostko_130528_04_01_09_52_11
-2024-12-16 17:12:12,988 - INFO - Downloaded mri.dcm for case Virostko_130517_04_01_11_24_25
-2024-12-16 17:12:13,154 - INFO - Downloaded mask.dcm for case Virostko_130515_04_01_09_43_27
-2024-12-16 17:12:13,214 - INFO - Downloaded mri.dcm for case Virostko_130545_04_01_16_10_39
-2024-12-16 17:12:13,258 - INFO - Downloaded mri.dcm for case Virostko_130546_04_01_16_43_22
-2024-12-16 17:12:13,258 - INFO - Downloaded mri.dcm for case Virostko_130533_04_01_15_15_58
-2024-12-16 17:12:13,271 - INFO - Downloaded mask.dcm for case Virostko_130406_04_01_14_41_01
-Downloading cases:  74%|███████▍  | 74/100 [00:29<00:06,  4.19it/s]2024-12-16 17:12:13,362 - INFO - Downloaded mask.dcm for case Virostko_130516_04_01_10_15_17
-2024-12-16 17:12:13,385 - INFO - Downloaded mask.dcm for case Virostko_130517_04_01_11_24_25
-2024-12-16 17:12:13,388 - INFO - Downloaded mask.dcm for case Virostko_130450_05_01_11_35_19
-2024-12-16 17:12:13,477 - INFO - Downloaded mask.dcm for case Virostko_130528_04_01_09_52_11
-2024-12-16 17:12:13,593 - INFO - Downloaded mask.dcm for case Virostko_130533_04_01_15_15_58
-2024-12-16 17:12:13,602 - INFO - Downloaded mri.dcm for case Virostko_130617_06_01_11_05_18
-2024-12-16 17:12:13,651 - INFO - Downloaded mask.dcm for case Virostko_130545_04_01_16_10_39
-2024-12-16 17:12:13,696 - INFO - Downloaded mri.dcm for case Virostko_130635_05_01_14_30_39
-2024-12-16 17:12:13,699 - INFO - Downloaded mri.dcm for case Virostko_130725_04_01_10_20_58
-2024-12-16 17:12:13,803 - INFO - Downloaded mri.dcm for case Virostko_130724_05_01_09_42_06
-2024-12-16 17:12:13,839 - INFO - Downloaded mask.dcm for case Virostko_130426_04_01_10_21_42
-Downloading cases:  76%|███████▌  | 76/100 [00:30<00:05,  4.05it/s]2024-12-16 17:12:13,885 - INFO - Downloaded mask.dcm for case Virostko_130617_06_01_11_05_18
-2024-12-16 17:12:13,896 - INFO - Downloaded mri.dcm for case Virostko_130727_04_01_11_07_02
-2024-12-16 17:12:13,912 - INFO - Downloaded mask.dcm for case Virostko_130546_04_01_16_43_22
-2024-12-16 17:12:13,913 - INFO - Downloaded mri.dcm for case Virostko_130750_04_01_13_26_13
-2024-12-16 17:12:14,012 - INFO - Downloaded mri.dcm for case Virostko_130715_05_01_08_36_00
-2024-12-16 17:12:14,098 - INFO - Downloaded mask.dcm for case Virostko_130725_04_01_10_20_58
-2024-12-16 17:12:14,212 - INFO - Downloaded mri.dcm for case Virostko_130818_04_01_16_55_34
-2024-12-16 17:12:14,297 - INFO - Downloaded mri.dcm for case Virostko_130821_06_01_10_35_47
-2024-12-16 17:12:14,398 - INFO - Downloaded mask.dcm for case Virostko_130727_04_01_11_07_02
-2024-12-16 17:12:14,419 - INFO - Downloaded mri.dcm for case Virostko_130822_04_01_13_09_45
-2024-12-16 17:12:14,801 - INFO - Downloaded mri.dcm for case Virostko_130823_05_01_13_45_03
-2024-12-16 17:12:15,110 - INFO - Downloaded mask.dcm for case Virostko_130823_05_01_13_45_03
-2024-12-16 17:12:15,426 - INFO - Downloaded mri.dcm for case Virostko_130773_04_01_15_47_21
-2024-12-16 17:12:15,428 - INFO - Downloaded mask.dcm for case Virostko_130635_05_01_14_30_39
-Downloading cases:  87%|████████▋ | 87/100 [00:32<00:02,  5.35it/s]2024-12-16 17:12:15,436 - INFO - Downloaded mask.dcm for case Virostko_130724_05_01_09_42_06
-2024-12-16 17:12:15,676 - INFO - Downloaded mask.dcm for case Virostko_130750_04_01_13_26_13
-2024-12-16 17:12:15,714 - INFO - Downloaded mask.dcm for case Virostko_130773_04_01_15_47_21
-2024-12-16 17:12:15,768 - INFO - Downloaded mri.dcm for case Virostko_130819_04_01_17_32_28
-2024-12-16 17:12:15,769 - INFO - Downloaded mask.dcm for case Virostko_130822_04_01_13_09_45
-2024-12-16 17:12:15,903 - INFO - Downloaded mask.dcm for case Virostko_130821_06_01_10_35_47
-2024-12-16 17:12:15,942 - INFO - Downloaded mri.dcm for case Virostko_130943_04_01_09_17_11
-2024-12-16 17:12:16,128 - INFO - Downloaded mask.dcm for case Virostko_130715_05_01_08_36_00
-Downloading cases:  88%|████████▊ | 88/100 [00:32<00:02,  4.48it/s]2024-12-16 17:12:16,152 - INFO - Downloaded mask.dcm for case Virostko_130818_04_01_16_55_34
-2024-12-16 17:12:16,194 - INFO - Downloaded mask.dcm for case Virostko_130819_04_01_17_32_28
-2024-12-16 17:12:16,216 - INFO - Downloaded mask.dcm for case Virostko_130943_04_01_09_17_11
-2024-12-16 17:12:16,251 - INFO - Downloaded mri.dcm for case Virostko_130945_04_01_11_27_23
-2024-12-16 17:12:16,618 - INFO - Downloaded mask.dcm for case Virostko_130945_04_01_11_27_23
-Downloading cases: 100%|██████████| 100/100 [00:33<00:00,  8.11it/s]Downloading cases: 100%|██████████| 100/100 [00:33<00:00,  3.00it/s]
-2024-12-16 17:12:16,619 - INFO - Successfully downloaded 100/100 cases
