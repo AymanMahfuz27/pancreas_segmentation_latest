@@ -295,6 +295,9 @@ class SAM2Base(torch.nn.Module):
         - obj_ptr: [B, C] shape, the object pointer vector for the output mask, extracted
           based on the output token from the SAM mask decoder.
         """
+        # print("[DEBUG in _forward_sam_heads] backbone_features.size() =", backbone_features.size())
+        # print("[DEBUG in _forward_sam_heads] sam_image_embedding_size =", self.sam_image_embedding_size)
+
         B = backbone_features.size(0)
         device = backbone_features.device
         assert backbone_features.size(1) == self.sam_prompt_embed_dim
@@ -461,18 +464,114 @@ class SAM2Base(torch.nn.Module):
         )
 
     def forward_image(self, img_batch: torch.Tensor):
-        """Get the image feature on the input batch."""
-        backbone_out = self.image_encoder(img_batch)
-        if self.use_high_res_features_in_sam:
-            # precompute projected level 0 and level 1 features in SAM decoder
-            # to avoid running it again on every SAM click
-            backbone_out["backbone_fpn"][0] = self.sam_mask_decoder.conv_s0(
-                backbone_out["backbone_fpn"][0]
+        """
+        Attempt to produce 3 feature maps + 3 position embeddings
+        for SAM2. If the trunk returns a single dict with
+        {'vision_features': <tensor>}, we artificially build
+        feats1, feats2 by pooling feats0 => that way, we end
+        up with 3 items in backbone_fpn, matching use_high_res_features_in_sam=True.
+
+        If trunk_out is already a list of length 3 or 4, we keep
+        that logic as is (the multi-stage approach).
+        """
+
+        # print("[DEBUG] Entering forward_image()...")
+        # print(f"[DEBUG]  img_batch.shape = {img_batch.shape}, "
+        #     f"dtype={img_batch.dtype}, device={img_batch.device}")
+
+        trunk_out = self.image_encoder(img_batch)
+        # print("[DEBUG]  trunk_out returned from self.image_encoder(...)")
+        # print(f"[DEBUG]  trunk_out type: {type(trunk_out)}")
+
+        # -----------------------------------------------------------------------
+        # CASE A: trunk_out is a list of dicts (multi-stage)
+        # -----------------------------------------------------------------------
+        if isinstance(trunk_out, list):
+        #     print(f"[DEBUG]  trunk_out is a list, length={len(trunk_out)}")
+
+            # e.g. if trunk_out has length=4, we pick [1,2,3] for the 3-level fpn
+            if len(trunk_out) == 4:
+                # Check they are all dicts
+                if not all(isinstance(x, dict) for x in trunk_out):
+                    raise ValueError("[DEBUG ERROR] trunk_out is a 4-element list but not all items are dicts.")
+                feats1 = trunk_out[1]["vision_features"]
+                feats2 = trunk_out[2]["vision_features"]
+                feats3 = trunk_out[3]["vision_features"]
+                pos1 = torch.zeros_like(feats1)
+                pos2 = torch.zeros_like(feats2)
+                pos3 = torch.zeros_like(feats3)
+                backbone_out = {
+                    "backbone_fpn": [feats1, feats2, feats3],
+                    "vision_pos_enc": [pos1, pos2, pos3],
+                }
+                return backbone_out
+
+            elif len(trunk_out) == 3:
+                # They might already be [0,1,2]
+                if not all(isinstance(x, dict) for x in trunk_out):
+                    raise ValueError("[DEBUG ERROR] trunk_out is a 3-element list but not all dicts.")
+                featsA = trunk_out[0]["vision_features"]
+                featsB = trunk_out[1]["vision_features"]
+                featsC = trunk_out[2]["vision_features"]
+                posA = torch.zeros_like(featsA)
+                posB = torch.zeros_like(featsB)
+                posC = torch.zeros_like(featsC)
+                backbone_out = {
+                    "backbone_fpn": [featsA, featsB, featsC],
+                    "vision_pos_enc": [posA, posB, posC],
+                }
+                return backbone_out
+            else:
+                raise ValueError(
+                    f"[DEBUG ERROR] trunk_out list has length={len(trunk_out)}, "
+                    f"expected either 3 or 4 for high-res usage."
+                )
+
+        # -----------------------------------------------------------------------
+        # CASE B: trunk_out is a dict => single-level -> artificially create feats1, feats2
+        # -----------------------------------------------------------------------
+        elif isinstance(trunk_out, dict):
+            # print("[DEBUG] trunk_out is a dict => single-level => artificially build 3 levels")
+
+            if "vision_features" not in trunk_out:
+                raise ValueError("[DEBUG ERROR] trunk_out dict has no key 'vision_features'")
+
+            feats0 = trunk_out["vision_features"]  # shape [B, C, H, W], e.g. [1,256,32,32]
+            # print(f"[DEBUG] feats0.shape = {feats0.shape}")
+
+            # We'll artificially create feats1, feats2 by 2× pooling feats0 each time
+            import torch.nn.functional as F
+            # feats1 = F.avg_pool2d(feats0, kernel_size=2, stride=2, ceil_mode=True)
+            # feats2 = F.avg_pool2d(feats1, kernel_size=2, stride=2, ceil_mode=True)
+            # print(f"[DEBUG] feats1.shape => {feats1.shape}")
+            # print(f"[DEBUG] feats2.shape => {feats2.shape}")
+
+            pos0 = torch.zeros_like(feats0)
+            # pos1 = torch.zeros_like(feats1)
+            # pos2 = torch.zeros_like(feats2)
+
+            backbone_out = {
+                # "backbone_fpn": [feats0, feats1, feats2],
+                # "vision_pos_enc": [pos0, pos1, pos2],
+                "backbone_fpn": [feats0],
+                "vision_pos_enc": [pos0],
+
+            }
+            return backbone_out
+
+        # -----------------------------------------------------------------------
+        # CASE C: trunk_out is neither list nor dict => error
+        # -----------------------------------------------------------------------
+        else:
+            raise ValueError(
+                f"[DEBUG ERROR] trunk_out is neither list nor dict. "
+                f"Got {type(trunk_out)} => trunk_out={trunk_out}"
             )
-            backbone_out["backbone_fpn"][1] = self.sam_mask_decoder.conv_s1(
-                backbone_out["backbone_fpn"][1]
-            )
-        return backbone_out
+
+
+
+
+
 
     def _prepare_backbone_features(self, backbone_out):
         """Prepare and flatten visual features."""

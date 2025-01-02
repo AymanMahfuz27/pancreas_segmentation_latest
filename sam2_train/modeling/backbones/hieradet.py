@@ -306,6 +306,7 @@ class Hiera(nn.Module):
                 i in self.stage_ends and self.return_interm_layers
             ):
                 feats = x.permute(0, 3, 1, 2)
+                # print("DEBUG Hiera stage", i, "=> feats shape=", feats.shape)  # <--- ADD
                 outputs.append(feats)
 
         return outputs

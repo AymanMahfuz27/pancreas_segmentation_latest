@@ -71,6 +71,7 @@ def train_sam(args, net: nn.Module, optimizer1, optimizer2, train_loader, epoch)
     
     with tqdm(total=len(train_loader), desc=f'Epoch {epoch}', unit='img') as pbar:
         for pack in train_loader:
+            pbar.update()
             torch.cuda.empty_cache()
             imgs_tensor = pack['image']      # shape [Z, 3, H, W]
             if imgs_tensor.dim() == 5 and imgs_tensor.size(0) == 1:
@@ -202,7 +203,7 @@ def train_sam(args, net: nn.Module, optimizer1, optimizer2, train_loader, epoch)
 
                 net.reset_state(train_state)
 
-            pbar.update()
+            # pbar.update()
 
     # Return averaged loss
     num_batches = len(train_loader)

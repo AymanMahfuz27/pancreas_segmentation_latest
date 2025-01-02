@@ -47,8 +47,8 @@ def get_dataloader(args):
     elif args.dataset == 'pancreas':
         # e.g. patch_size could be read from args or fixed
         patch_z = 32
-        patch_y = 256
-        patch_x = 256
+        patch_y = 512
+        patch_x = 512
         pancreas_train_dataset = PancreasDataset(
             args,
             args.data_path,
