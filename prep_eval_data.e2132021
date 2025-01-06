@@ -1,0 +1,11 @@
+WARNING: Could not find any nv files on this host!
+Traceback (most recent call last):
+  File "/home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest/preprocess_eval_data.py", line 111, in <module>
+    main()
+  File "/home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentation_latest/preprocess_eval_data.py", line 82, in main
+    os.makedirs(IMAGES_TS_DIR, exist_ok=True)
+  File "/opt/conda/envs/pansegnet_env/lib/python3.10/os.py", line 215, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/opt/conda/envs/pansegnet_env/lib/python3.10/os.py", line 225, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/scratch/pancreas_eval_data_preprocessed'

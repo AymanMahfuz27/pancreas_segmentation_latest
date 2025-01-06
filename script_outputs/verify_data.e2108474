@@ -1,54 +1,0 @@
-INFO:__main__:Found 100 cases
-Analyzing cases:   0%|          | 0/5 [00:00<?, ?it/s]INFO:__main__:
-Case Moore_142733_06_01_11_30_49:
-INFO:__main__:MRI shape: (48, 256, 256)
-INFO:__main__:Mask shape: (48, 256, 256)
-INFO:__main__:MRI range: [0, 1760]
-INFO:__main__:Mask unique values: [    0 65535]
-INFO:__main__:Mask coverage: 0.21%
-Analyzing cases:  20%|██        | 1/5 [00:01<00:05,  1.42s/it]INFO:__main__:
-Case Powers_236110_04_01_10_41_45:
-INFO:__main__:MRI shape: (30, 256, 256)
-INFO:__main__:Mask shape: (30, 256, 256)
-INFO:__main__:MRI range: [0, 2052]
-INFO:__main__:Mask unique values: [    0 65535]
-INFO:__main__:Mask coverage: 0.18%
-Analyzing cases:  40%|████      | 2/5 [00:02<00:03,  1.06s/it]INFO:__main__:
-Case VIROSTKO_233256_04_01_13_18_45:
-INFO:__main__:MRI shape: (30, 256, 256)
-INFO:__main__:Mask shape: (30, 256, 256)
-INFO:__main__:MRI range: [0, 2124]
-INFO:__main__:Mask unique values: [    0 65535]
-INFO:__main__:Mask coverage: 0.29%
-Analyzing cases:  60%|██████    | 3/5 [00:02<00:01,  1.13it/s]INFO:__main__:
-Case Viroskto_233873_04_01_09_11_10:
-INFO:__main__:MRI shape: (30, 256, 256)
-INFO:__main__:Mask shape: (30, 256, 256)
-INFO:__main__:MRI range: [0, 2198]
-INFO:__main__:Mask unique values: [    0 65535]
-INFO:__main__:Mask coverage: 0.36%
-Analyzing cases:  80%|████████  | 4/5 [00:03<00:00,  1.31it/s]INFO:__main__:
-Case Viroskto_233874_03_01_09_44_24:
-INFO:__main__:MRI shape: (30, 256, 256)
-INFO:__main__:Mask shape: (30, 256, 256)
-INFO:__main__:MRI range: [0, 1861]
-INFO:__main__:Mask unique values: [    0 65535]
-INFO:__main__:Mask coverage: 0.16%
-Analyzing cases: 100%|██████████| 5/5 [00:04<00:00,  1.34it/s]Analyzing cases: 100%|██████████| 5/5 [00:04<00:00,  1.19it/s]
-INFO:__main__:
-Summary Statistics:
-INFO:__main__:Unique MRI shapes: {(30, 256, 256), (48, 256, 256)}
-INFO:__main__:Unique mask shapes: {(30, 256, 256), (48, 256, 256)}
-INFO:__main__:MRI value ranges: min=0.0, max=2198.0
-INFO:__main__:Mask value ranges: min=0.0, max=65535.0
-INFO:__main__:All unique mask values: {0, 65535}
-INFO:func_3d.dataset.pancreas:Found 80 cases for Training
-WARNING:func_3d.dataset.pancreas:Skipping Virostko_128077_04_01_08_24_44: MRI and mask shapes differ ((30, 256, 256) vs (98, 288, 288)).
-INFO:func_3d.dataset.pancreas:After filtering, 79 cases remain for Training.
-INFO:__main__:
-PancreasDataset length: 79
-INFO:__main__:Sample image shape: torch.Size([2, 3, 1024, 1024])
-INFO:__main__:Sample mask shape: torch.Size([1, 1024, 1024])
-INFO:__main__:Sample mask unique values: tensor([0.])
-INFO:__main__:First frame MRI range after normalization: [0.0, 0.9843137264251709]
-INFO:__main__:Mask is binary? True

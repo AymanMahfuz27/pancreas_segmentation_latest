@@ -1,6 +1,0 @@
---2024-11-29 23:12:52--  https://huggingface.co/jiayuanz3/MedSAM2_pretrain/resolve/main/sam2_hiera_small.pt
-Resolving huggingface.co (huggingface.co)... 108.156.211.125, 108.156.211.90, 108.156.211.95, ...
-Connecting to huggingface.co (huggingface.co)|108.156.211.125|:443... connected.
-HTTP request sent, awaiting response... 404 Not Found
-2024-11-29 23:12:52 ERROR 404: Not Found.
-

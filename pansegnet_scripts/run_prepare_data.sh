@@ -2,7 +2,7 @@
 #SBATCH -J prep_nnunet_data
 #SBATCH -o prep_nnunet_data.o%j
 #SBATCH -e prep_nnunet_data.e%j
-#SBATCH -p gpu-h100
+#SBATCH -p development
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -t 02:00:00
@@ -17,7 +17,7 @@ PROJECT_DIR=/home1/09999/aymanmahfuz/pancreas_project_latest/pancreas_segmentati
 WORK_DIR=/work/09999/aymanmahfuz/ls6
 SCRATCH_DIR=/scratch/09999/aymanmahfuz
 
-CONTAINER_PATH=$WORK_DIR/containers/medsam2.sif
+CONTAINER_PATH=$WORK_DIR/containers/pansegnet_env.sif
 PY_SCRIPT=/project/prepare_nnunet_data.py
 
 module purge
@@ -30,7 +30,7 @@ apptainer exec --nv \
     --bind $PROJECT_DIR:/project \
     --bind $WORK_DIR:/work \
     $CONTAINER_PATH \
-    bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate medsam2 && \
+    bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate pansegnet_env && \
              python $PY_SCRIPT"
 
 echo "Data preparation completed. Check the logs above for skipped cases or errors."

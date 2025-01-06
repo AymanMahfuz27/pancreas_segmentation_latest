@@ -10,18 +10,9 @@ prepare_nnunet_data.py
          /scratch/09999/aymanmahfuz/pancreas_test_data_preprocessed_paNSegNet/
            ├── imagesTr/
            └── labelsTr/
-       Each MRI →  case_XXX_0000.nii.gz
-       Each mask → case_XXX.nii.gz
+       Each MRI →  {case_id}_0000.nii.gz
+       Each mask → {case_id}.nii.gz
     4. Normalizes mask values if needed (e.g., from 65535 to 1).
-
-**Notes**:
-    - If a shape mismatch or error occurs, we skip that case.
-    - The final data will be used later for nnU-Net plan/preprocess.
-    - Adjust indexing, naming, or any additional filtering logic as needed.
-
-**Usage**:
-    python prepare_nnunet_data.py
-
 """
 
 import os
@@ -41,7 +32,7 @@ LABELS_TR_DIR = os.path.join(TARGET_DIR, "labelsTr")
 def read_dicom_volume(dicom_path):
     """
     Reads a multi-frame DICOM file using SimpleITK and returns the image object.
-    Raises exception on error (e.g., if shape mismatch or read fails).
+    Raises an exception on error (e.g., if shape mismatch or read fails).
     """
     reader = sitk.ImageFileReader()
     reader.SetFileName(dicom_path)
@@ -56,7 +47,7 @@ def convert_and_save(mri_path, mask_path, case_id):
     # Read MRI
     mri_image = read_dicom_volume(mri_path)
     mri_array = sitk.GetArrayFromImage(mri_image)  # shape: [Z, Y, X]
-    mri_shape = mri_array.shape  # e.g., (30, 256, 256)
+    mri_shape = mri_array.shape
 
     # Read Mask
     mask_image = read_dicom_volume(mask_path)
@@ -68,21 +59,17 @@ def convert_and_save(mri_path, mask_path, case_id):
         raise ValueError(f"Shape mismatch: MRI={mri_shape} vs MASK={mask_shape}")
 
     # If mask contains 65535 for pancreas, convert to 1
-    # We can do a threshold-based approach:
-    # any voxel > 0 is set to 1.
     mask_array[mask_array > 0] = 1
-    # Recreate the sitk Image for output
     mask_image = sitk.GetImageFromArray(mask_array)
-    mask_image.CopyInformation(mri_image)  # keep spacing/origin consistent
+    mask_image.CopyInformation(mri_image)
 
-    # Save MRI → imagesTr/case_XXX_0000.nii.gz
+    # Save MRI → imagesTr/{case_id}_0000.nii.gz
     out_mri_path = os.path.join(IMAGES_TR_DIR, f"{case_id}_0000.nii.gz")
     sitk.WriteImage(mri_image, out_mri_path)
 
-    # Save Mask → labelsTr/case_XXX.nii.gz
+    # Save Mask → labelsTr/{case_id}.nii.gz
     out_mask_path = os.path.join(LABELS_TR_DIR, f"{case_id}.nii.gz")
     sitk.WriteImage(mask_image, out_mask_path)
-
 
 def main():
     # Create output dirs if they don't exist
@@ -92,7 +79,7 @@ def main():
     subdirs = [d for d in os.listdir(SOURCE_DIR)
                if os.path.isdir(os.path.join(SOURCE_DIR, d))]
 
-    case_count = 0
+    converted_count = 0
     for subdir in subdirs:
         mri_path = os.path.join(SOURCE_DIR, subdir, "mri.dcm")
         mask_path = os.path.join(SOURCE_DIR, subdir, "mask.dcm")
@@ -102,17 +89,18 @@ def main():
             print(f"[SKIP] {subdir}: missing mri.dcm or mask.dcm.")
             continue
 
-        case_id_str = f"case_{case_count:03d}"
+        # Use the subdirectory name (instead of case_XXX)
+        case_id_str = subdir
 
         try:
             convert_and_save(mri_path, mask_path, case_id_str)
             print(f"[OK] Converted {subdir} → {case_id_str}")
-            case_count += 1
+            converted_count += 1
         except Exception as e:
             print(f"[SKIP] {subdir}: {e}")
             continue
 
-    print(f"\nAll done. Successfully converted {case_count} cases.")
+    print(f"\nAll done. Successfully converted {converted_count} cases.")
 
 if __name__ == "__main__":
     main()
